@@ -1,20 +1,45 @@
-.navbar-brand{
-  padding: 5px 5px;
+.navbar-brand {
+    padding: 5px 5px;
 }
 .navbar-brand>img {
-  width: auto;
-  height: 100%;
+    width: auto;
+    height: 100%;
 }
-.innerbar{
-  position: relative;
-  top: -20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
+.innerbar {
+    position: relative;
+    top: -20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
-
-.innerbar form{
-  display: none;
+.innerbar form {
+    display: none;
 }
-.innerbar form input{
+.bottombar {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.back-to-top {
+    position: fixed;
+    z-index: 100;
+    display: none;
+    bottom: 0px;
+    right: 0px;
+}
+.back-to-top-parent {
   width: 100%;
+  position: relative;
+  height: 2em;
+}
+footer {
+    border-top: 20px solid #ffab91;
+    background-color: #F44336;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+footer a {
+    color: #fcf8e3;
+    text-decoration: none;
+}
+footer a:hover, footer a:focus {
+    color: #e6d5b8;
 }
