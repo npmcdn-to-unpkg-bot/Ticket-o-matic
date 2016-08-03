@@ -44,6 +44,11 @@ html,body{
 .full-parent{
   height: 100%;
 }
+@media (max-width:767px){
+  .row.full-parent{
+    height: auto;
+  }
+}
 /*
 * ACCOUNT PAGE
 */
