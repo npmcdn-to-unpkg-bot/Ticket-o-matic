@@ -1,3 +1,10 @@
+html,body{
+  height: 100%;
+}
+/*
+* NAVBAR TOP
+*/
+
 .navbar {
     margin-bottom: 0;
 }
@@ -18,9 +25,11 @@
 .innerbar form {
     display: none;
 }
-.bottombar {
-    border-top: 20px solid #ffab91;
-}
+
+/*
+* BACK TO TOP BUTTON
+*/
+
 .back-to-top {
     position: fixed;
     z-index: 100;
@@ -32,11 +41,36 @@
     width: 100%;
     position: relative;
 }
+.full-parent{
+  height: 100%;
+}
+/*
+* ACCOUNT PAGE
+*/
+
 .account-nav-list li {
     list-style: none;
 }
 .account-nav-list .btn-link {
     text-decoration: none;
+}
+
+.sidebar {
+    /*position: fixed;*/
+    /*top: 71px;*/
+    /*bottom: 0;*/
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: #fbf7d9;
+    padding-bottom: 40px;
+}
+/*
+* FOOTER
+*/
+
+.bottombar {
+    border-top: 20px solid #ffab91;
 }
 footer {
     bottom: 0;
@@ -51,13 +85,4 @@ footer a {
 }
 footer a:hover, footer a:focus {
     color: #e6d5b8;
-}
-.sidebar {
-    position: fixed;
-    top: 71px;
-    bottom: 0;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-color: #fbf7d9;
-    padding-bottom: 40px;
 }
