@@ -1,5 +1,18 @@
-html,body{
-  height: 100%;
+html {
+    height: 100%;
+    /*box-sizing: border-box;*/
+}
+body {
+    height: inherit;
+    min-height: 100%;
+    /* padding-bottom = footer.height + back-to-top.height */
+    padding-bottom: 117px;
+    position: relative;
+}
+@media screen and (max-width:767px){
+body {
+  height: auto;
+}
 }
 /*
 * NAVBAR TOP
@@ -17,13 +30,21 @@ html,body{
 }
 .innerbar {
     position: relative;
-    /*top: -20px;*/
     z-index: 1000;
     padding-top: 10px;
     padding-bottom: 10px;
 }
 .innerbar form {
     display: none;
+}
+
+/*
+* BUTTON - bugfix
+*/
+
+.btn-primary.active.focus, .btn-primary.active:hover, .btn-primary.active:focus, .btn-primary:active:hover, .btn-primary:active:focus, .btn-primary:active.focus {
+    background-color: #ee3900;
+    border-color: #ca3100;
 }
 
 /*
@@ -39,16 +60,19 @@ html,body{
 }
 .back-to-top-parent {
     width: 100%;
-    position: relative;
+    position: absolute;
+    /* bottom = footer.height */
+    bottom: 81px;
 }
-.full-parent{
-  height: 100%;
+
+/*
+* FULL HEIGHT
+*/
+
+.full-parent {
+    height: 100%;
 }
-@media (max-width:767px){
-  .row.full-parent{
-    height: auto;
-  }
-}
+
 /*
 * ACCOUNT PAGE
 */
@@ -56,20 +80,12 @@ html,body{
 .account-nav-list li {
     list-style: none;
 }
-.account-nav-list .btn-link {
-    text-decoration: none;
-}
-
 .sidebar {
-    /*position: fixed;*/
-    /*top: 71px;*/
-    /*bottom: 0;*/
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
     background-color: #fbf7d9;
     padding-bottom: 40px;
+    height: 100%;
 }
+
 /*
 * FOOTER
 */
@@ -78,8 +94,11 @@ html,body{
     border-top: 20px solid #ffab91;
 }
 footer {
+    position: absolute;
     bottom: 0;
-    position: relative;
+    left: 0;
+    right: 0;
+    height: 81px;
     background-color: #F44336;
     padding-top: 15px;
     padding-bottom: 15px;

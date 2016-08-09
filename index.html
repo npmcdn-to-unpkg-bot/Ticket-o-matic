@@ -27,7 +27,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">
+                    <a class="navbar-brand" href="index.html">
                         <img alt="Ticket-o-Matic" src="./assets/all.png"></a>
                 </div>
 
@@ -113,37 +113,92 @@
     </header>
 
     <div class="container-fluid full-parent">
-        <div class="row full-parent">
-            <section id="account-nav" class="col-xs-12 col-sm-4 account-nav sidebar full-parent">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-offset-4 col-sm-8">
-                        <div class="page-header">
-                            <h3>Antonio Fortino</h3>
+            <div class="row full-parent">
+                <section id="account-nav" class="col-xs-12 col-sm-4 sidebar">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-offset-4 col-sm-8 ">
+                            <div class="page-header">
+                                <h3>Antonio Fortino</h3>
+                            </div>
+                            <ul class="nav account-nav-list">
+                                <li>
+                                    <a href="#"><span class="glyphicon glyphicon-user"></span> Account Details</a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="glyphicon glyphicon-list-alt"></span> Orders</a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="glyphicon glyphicon-star"></span> Wish lists</a>
+                                </li>
+                                <li>
+                                    <a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                                </li>
+                            </ul>
                         </div>
-                        <ul class="nav account-nav-list">
-                            <li>
-                                <button type="button" class="btn  btn-link" name="button"><span class="glyphicon glyphicon-user"></span> Account Details</button>
-                            </li>
-                            <li>
-                                <button type="button" class="btn  btn-link" name="button"><span class="glyphicon glyphicon-list-alt"></span> Orders</button>
-                            </li>
-                            <li>
-                                <button type="button" class="btn  btn-link" name="button"><span class="glyphicon glyphicon-star"></span> Wish lists</button>
-                            </li>
-                            <li>
-                                <button type="button" class="btn btn-link " name="button"><span class="glyphicon glyphicon-log-out"></span> Logout</button>
-                            </li>
-                        </ul>
                     </div>
-                </div>
-            </section>
-            <section id="account-content" class="col-xs-12 col-sm-8">
-                <div class="page-header">
-                    <h3>Antonio Fortino</h3>
-                </div>
+                    <!--<div class=" hidden-xs push-down push-down">
 
-            </section>
-        </div>
+                    </div>-->
+                </section>
+                <section id="account-content" class="col-xs-12 col-sm-8">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="page-header">
+                                <h3>Account Details</h3>
+                            </div>
+                            <div class="row">
+                                <label for="account-details-form" class="col-xs-12 col-sm-3 col-sm-offset-1">
+                                    <h4>Your Details</h4></label>
+                            </div>
+
+                            <form id="account-details-form" class="form-horizontal" action="" method="post">
+                                <div class="form-group">
+                                    <label for="username" class="col-xs-12 col-sm-2 control-label">Username:</label>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <p id="username" class="form-control-static">
+                                            Your Username
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="col-xs-12 col-sm-2 control-label">Name:</label>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="surname" class="col-xs-12 col-sm-2 control-label">Surname:</label>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <input type="text" class="form-control" id="surname" name="surname" placeholder="Surname">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="email" class="col-xs-12 col-sm-2  control-label">Email:</label>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-xs-12 col-sm-2  control-label">Password:</label>
+                                    <div class="col-xs-12 col-sm-6">
+                                        <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-xs-8 col-sm-4 col-sm-offset-2">
+                                        <button type="submit" class="btn btn-success btn-block">Update</button>
+                                    </div>
+                                    <div class="col-xs-4 col-sm-2">
+                                        <button type="reset" class="btn btn-default"> Cancel </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </section>
+            </div>
     </div>
     <div class="back-to-top-parent">
         <button type="button" name="back-to-top" id="back-to-top" class="btn btn-primary back-to-top"><span class="glyphicon glyphicon-chevron-up"></span> TOP</button>
@@ -152,7 +207,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-6">
-                    Developed with <span class="glyphicon glyphicon-heart"></span> by Antonio Fortino
+                    <a href="https://github.com/thoniorf/Ticket-o-matic" target="_blank" alt="github-ticket-o-matic">Developed with <span class="glyphicon glyphicon-heart"></span> by Antonio Fortino</a>
                 </div>
                 <div class="col-xs-6">
                     <a class="pull-right" rel="license" href="http://creativecommons.org/licenses/by/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" /></a>
