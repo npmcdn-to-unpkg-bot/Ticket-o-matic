@@ -41,9 +41,9 @@
                                 <li><a href="#">Festival</a></li>
                             </ul>
                         </li>
-                        <li class="navbar-action-group visible-xs"><a href="#" aria-label="search">Search</a></li>
-                        <li class="navbar-action-group visible-xs"><a href="#" aria-label="login">Login</a></li>
-                        <li class="navbar-action-group visible-xs"><a href="#" aria-label="cart">Cart</a></li>
+                        <li class="navbar-action-group visible-xs"><a href="#" aria-label="search"><span class="glyphicon glyphicon-search"></span> Search</a></li>
+                        <li class="navbar-action-group visible-xs"><a href="#" aria-label="login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                        <li class="navbar-action-group visible-xs"><a href="#" aria-label="cart"><span class="glyphicon glyphicon-shopping-cart"></span> Cart</a></li>
                     </ul>
                     <div class="navbar-action-group navbar-right hidden-xs">
                         <button type="button" class="btn btn-default navbar-btn" aria-label="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
@@ -56,35 +56,53 @@
         <div class="innerbar light-primary-color">
             <div id="innerbar-popup" class="hidden">
                 <div class="container">
-                    <form id="inner-search-form" method="post">
+                    <form id="inner-search-form" class="" method="post">
+                        <!--<input type="date" class=" form-control" aria-label="search" id="searchbydate" name="search">-->
                         <div class="row">
                             <div class="col-xs-12">
-                                <div class="form-group">
-
-
+                                <div class="form-group" id="search-group">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" aria-label="search" id="search" name="search" placeholder="Search">
-                                        <div class="input-group-btn">
+                                        <input type="search" class="form-control" aria-label="search" id="search" name="search" placeholder="Search by Events Title">
+                                        <span class="input-group-btn">  <button type="submit" class="btn btn-default">Search</button></span>
+                                    </div>
+                                </div>
+                                <div class="form-group hidden" id="searchbydate-group">
+                                    <div class="input-group">
+                                        <input type="date" class="form-control" aria-label="search" id="search" name="search" placeholder="Search">
+                                        <span class="input-group-btn">  <button type="submit" class="btn btn-default">Search</button></span>
+                                    </div>
+                                </div>
+                                <div class="form-group search-inline hidden" id="searchbyprice-group">
+                                    <div class="row">
+                                        <div class="col-xs-4 col-sm-5">
+                                            <input type="number" class="form-control" aria-label="lower bound" name="pricelower" placeholder="Upper Bound">
+                                        </div>
+                                        <div class="col-xs-4 col-sm-5">
+                                            <input type="number" class="form-control" aria-label="upper bound" name="priceupper" placeholder="Lower Bound">
+                                        </div>
+                                        <div class="col-xs-4 col-sm-2">
                                             <button type="submit" class="btn btn-default">Search</button>
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="col-xs-12">
-
-                                <label class="control-label"><span class="glyphicon glyphicon-filter"></span>Filter</label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="filters" id="filterbytitle" value="bytitle" />Title
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="filters" id="filterbyloc" value="byloc" />Location
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="filters" id="filterbydate" value="bydate" />Date
-                                </label>
-                                <label class="radio-inline">
-                                    <input type="radio" name="filters" id="filterbyprice" value="byprice" />Price
-                                </label>
+                                <div class="form-group">
+                                    <label class="control-label"><span class="glyphicon glyphicon-filter"></span>Filter</label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="filters" id="filterbytitle" value="bytitle" checked/>Title
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="filters" id="filterbyloc" value="byloc" />Location
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="filters" id="filterbydate" value="bydate" />Date
+                                    </label>
+                                    <label class="radio-inline">
+                                        <input type="radio" name="filters" id="filterbyprice" value="byprice" />Price
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -98,7 +116,7 @@
                                     <input type="password" class="form-control" aria-label="Password" id="password" name="password" placeholder="Password">
                                 </div>
                                 <div class="form-group">
-                                    <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>Login</button>
+                                    <button type="submit" class="btn btn-default btn-block"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span> Login</button>
                                 </div>
                                 <div class="form-group">
                                     <button type="button" class="btn btn-default btn-block">Sign up</button>
@@ -113,92 +131,96 @@
     </header>
 
     <div class="container-fluid full-parent">
-            <div class="row full-parent">
-                <section id="account-nav" class="col-xs-12 col-sm-4 sidebar">
-                    <div class="row">
-                        <div class="col-xs-12 col-sm-offset-4 col-sm-8 ">
-                            <div class="page-header">
-                                <h3>Antonio Fortino</h3>
-                            </div>
-                            <ul class="nav account-nav-list">
-                                <li>
-                                    <a href="#"><span class="glyphicon glyphicon-user"></span> Account Details</a>
-                                </li>
-                                <li>
-                                    <a href="#"><span class="glyphicon glyphicon-list-alt"></span> Orders</a>
-                                </li>
-                                <li>
-                                    <a href="#"><span class="glyphicon glyphicon-star"></span> Wish lists</a>
-                                </li>
-                                <li>
-                                    <a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-                                </li>
-                            </ul>
+        <div class="row full-parent">
+            <section id="account-nav" class="col-xs-12 col-sm-4 sidebar">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-offset-4 col-sm-8 ">
+                        <div class="page-header">
+                            <h3>Antonio Fortino</h3>
                         </div>
+                        <ul class="nav account-nav-list">
+                            <li>
+                                <a href="#"><span class="glyphicon glyphicon-user"></span> Account Details</a>
+                            </li>
+
+                            <li>
+                                <a href="#"><span class="glyphicon glyphicon-calendar"></span> Organizer Events</a>
+                            </li>
+                            <li>
+                                <a href="#"><span class="glyphicon glyphicon-list-alt"></span> Orders</a>
+                            </li>
+                            <li>
+                                <a href="#"><span class="glyphicon glyphicon-star"></span> Wish lists</a>
+                            </li>
+                            <li>
+                                <a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
+                            </li>
+                        </ul>
                     </div>
-                    <!--<div class=" hidden-xs push-down push-down">
+                </div>
+                <!--<div class=" hidden-xs push-down push-down">
 
                     </div>-->
-                </section>
-                <section id="account-content" class="col-xs-12 col-sm-8">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <div class="page-header">
-                                <h3>Account Details</h3>
-                            </div>
-                            <div class="row">
-                                <label for="account-details-form" class="col-xs-12 col-sm-3 col-sm-offset-1">
-                                    <h4>Your Details</h4></label>
-                            </div>
-
-                            <form id="account-details-form" class="form-horizontal" action="" method="post">
-                                <div class="form-group">
-                                    <label for="username" class="col-xs-12 col-sm-2 control-label">Username:</label>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <p id="username" class="form-control-static">
-                                            Your Username
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="name" class="col-xs-12 col-sm-2 control-label">Name:</label>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <input type="text" class="form-control" id="name" name="name" placeholder="Name">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="surname" class="col-xs-12 col-sm-2 control-label">Surname:</label>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <input type="text" class="form-control" id="surname" name="surname" placeholder="Surname">
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="email" class="col-xs-12 col-sm-2  control-label">Email:</label>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="password" class="col-xs-12 col-sm-2  control-label">Password:</label>
-                                    <div class="col-xs-12 col-sm-6">
-                                        <input type="text" class="form-control" id="password" name="password" placeholder="Password">
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-xs-8 col-sm-4 col-sm-offset-2">
-                                        <button type="submit" class="btn btn-success btn-block">Update</button>
-                                    </div>
-                                    <div class="col-xs-4 col-sm-2">
-                                        <button type="reset" class="btn btn-default"> Cancel </button>
-                                    </div>
-                                </div>
-                            </form>
+            </section>
+            <section id="account-content" class="col-xs-12 col-sm-8">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="page-header">
+                            <h3>Account Details</h3>
                         </div>
-                    </div>
+                        <div class="row">
+                            <label for="account-details-form" class="col-xs-12 col-sm-3 col-sm-offset-1">
+                                <h4>Your Details</h4></label>
+                        </div>
 
-                </section>
-            </div>
+                        <form id="account-details-form" class="form-horizontal" action="" method="post">
+                            <div class="form-group">
+                                <label for="username" class="col-xs-12 col-sm-2 control-label">Username:</label>
+                                <div class="col-xs-12 col-sm-6">
+                                    <p id="username" class="form-control-static">
+                                        Your Username
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="name" class="col-xs-12 col-sm-2 control-label">Name:</label>
+                                <div class="col-xs-12 col-sm-6">
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="surname" class="col-xs-12 col-sm-2 control-label">Surname:</label>
+                                <div class="col-xs-12 col-sm-6">
+                                    <input type="text" class="form-control" id="surname" name="surname" placeholder="Surname">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="col-xs-12 col-sm-2  control-label">Email:</label>
+                                <div class="col-xs-12 col-sm-6">
+                                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="col-xs-12 col-sm-2  control-label">Password:</label>
+                                <div class="col-xs-12 col-sm-6">
+                                    <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-8 col-sm-4 col-sm-offset-2">
+                                    <button type="submit" class="btn btn-success btn-block">Update</button>
+                                </div>
+                                <div class="col-xs-4 col-sm-2">
+                                    <button type="reset" class="btn btn-default"> Cancel </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </section>
+        </div>
     </div>
     <div class="back-to-top-parent">
         <button type="button" name="back-to-top" id="back-to-top" class="btn btn-primary back-to-top"><span class="glyphicon glyphicon-chevron-up"></span> TOP</button>
