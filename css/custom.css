@@ -1,12 +1,8 @@
 html {
     height: 100%;
-    /*box-sizing: border-box;*/
 }
 body {
-    height: inherit;
-    min-height: 100%;
-    /* padding-bottom = footer.height + back-to-top.height */
-    padding-bottom: 117px;
+    height: 100%;
     position: relative;
 }
 @media screen and (max-width:767px) {
@@ -38,15 +34,14 @@ body {
 .innerbar form {
     display: none;
 }
-.innerbar form .search-inline div[class^=col-]:first-child{
-  padding-left: 15px;
+.innerbar form .search-inline div[class^=col-]:first-child {
+    padding-left: 15px;
 }
 .innerbar form .search-inline div[class^=col-] {
-  padding-left: 5px;
-  padding-right: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
-.innerbar form .search-inline input {
-}
+.innerbar form .search-inline input {}
 
 /*
 * BUTTON - bugfix
@@ -70,19 +65,30 @@ body {
 }
 .back-to-top-parent {
     width: 100%;
-    position: absolute;
-    /* bottom = footer.height */
-    bottom: 81px;
+    position: relative;
+
 }
-
-/*
-* FULL HEIGHT
-*/
-
-.full-parent {
-    height: 100%;
+.content {
+  position: relative;
+    min-height: 100%;
+    margin-bottom: -81px;
 }
-
+.content:after {
+    content: "";
+    display: block;
+    /* .push must be the same height as footer */
+    height: 117px;
+}
+.sidebar {
+  padding-bottom: 40px;
+}
+.sidebar-float {
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  width: 33.33333333%;
+  margin-left: -15px;
+}
 /*
 * ACCOUNT PAGE
 */
@@ -90,28 +96,17 @@ body {
 .account-nav-list li {
     list-style: none;
 }
-.sidebar {
-    background-color: #fbf7d9;
-    padding-bottom: 40px;
-    height: 100%;
-}
 
 /*
 * FOOTER
 */
 
-.bottombar {
-    border-top: 20px solid #ffab91;
-}
 footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     height: 81px;
     background-color: #F44336;
     padding-top: 15px;
     padding-bottom: 15px;
+    border-top: 20px solid #ffab91;
 }
 footer a {
     color: #fcf8e3;

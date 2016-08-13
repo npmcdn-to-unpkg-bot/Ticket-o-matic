@@ -54,7 +54,6 @@ $("#inner-search-form").on('click',"input[name=filters]",function(){
  */
 function backToTopOffset() {
   var offset = $(document).height() - $("footer").offset().top;
-  console.log(offset);
     if ($(this).scrollTop() > offset) {
         $("#back-to-top").fadeIn(duration);
     } else {
@@ -78,4 +77,10 @@ $("#back-to-top").on('click', function(e) {
     $("html,body").animate({
         scrollTop: 0
     }, duration);
+});
+/*
+* Windows resize
+*/
+$( window ).resize(function() {
+
 });
