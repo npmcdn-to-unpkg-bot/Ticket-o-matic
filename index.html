@@ -30,7 +30,6 @@
                     <a class="navbar-brand" href="index.html">
                         <img alt="Ticket-o-Matic" src="./assets/all.png"></a>
                 </div>
-
                 <div class="collapse navbar-collapse " id="navbar-collapse">
                     <ul class="nav navbar-nav navbar-left ">
                         <li class="dropdown">
@@ -88,8 +87,8 @@
 
                             </div>
                             <div class="col-xs-12">
-                                <div class="form-group">
-                                    <label class="control-label"><span class="glyphicon glyphicon-filter"></span>Filter</label>
+                                <label class="control-label"><span class="glyphicon glyphicon-filter"></span>Filter</label>
+                                <div>
                                     <label class="radio-inline">
                                         <input type="radio" name="filters" id="filterbytitle" value="bytitle" checked/>Title
                                     </label>
@@ -129,138 +128,81 @@
             </div>
         </div>
     </header>
-
-    <div class="content container-fluid">
-        <div class="sidebar-float sidebar-color hidden-xs"></div>
-        <div class="row">
-            <section id="account-nav" class="col-xs-12 col-sm-4 sidebar sidebar-color">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-offset-4 col-sm-8 ">
-                        <div class="page-header">
-                            <h3>Antonio Fortino</h3>
-                        </div>
-                        <ul class="nav account-nav-list">
-                            <li>
-                                <a href="#"><span class="glyphicon glyphicon-user"></span> Account Details</a>
-                            </li>
-
-                            <li>
-                                <a href="#"><span class="glyphicon glyphicon-calendar"></span> Organizer Events</a>
-                            </li>
-                            <li>
-                                <a href="#"><span class="glyphicon glyphicon-list-alt"></span> Orders</a>
-                            </li>
-                            <li>
-                                <a href="#"><span class="glyphicon glyphicon-star"></span> Wish lists</a>
-                            </li>
-                            <li>
-                                <a href="#"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
-                            </li>
-                        </ul>
+    <div class="content">
+        <section id="event" class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="page-header">
+                        <h3>Event Name</h3>
                     </div>
                 </div>
-            </section>
-            <section id="account-content" class="col-xs-12 col-sm-8">
-                <div class="row">
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-3">
+                    <a href="#" class="thumbnail">
+                        <img src="assets/Image_placeholder.png" alt="event image">
+                    </a>
+                </div>
+                <div class="col-xs-12 col-sm-9">
+                    <div class="row">
+                        <div id="event-date" class="col-xs-12">
+                            <h5><span class="glyphicon glyphicon-calendar"></span> Date:</h5>
+                            <p>
+                                08/13/2016
+                            </p>
+                        </div>
+                        <div id="event-category" class="col-xs-12">
+                            <h5><span class="glyphicon glyphicon-list"></span> Category:</h5>
+                            <p>
+                                Category
+                            </p>
+                        </div>
+                        <div id="event-description" class="col-xs-12">
+                            <h5><span class="glyphicon glyphicon-bold"></span> Description:</h5>
+                            <p>
+                                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris
+                                placerat eleifend leo.
+                            </p>
+                        </div>
+                        <div id="event-location" class="col-xs-12">
+                            <h5><span class="glyphicon glyphicon-map-marker"></span> Location:</h5>
+                            <p>
+                                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p class="lead">Tickets:</p>
+                    <hr>
+                </div>
+                <div class="col-xs-12">
+                  <div id="ticket-group" class="row">
                     <div class="col-xs-12">
-                        <div class="page-header">
-                            <h3>Create Event</h3>
-                        </div>
-                        <div class="row">
-                            <label for="event-details-form" class="col-xs-12 col-sm-3 col-sm-offset-1">
-                                <h4>Event Details</h4></label>
-                        </div>
 
-                        <form id="event-details-form" class="form-horizontal" action="" method="post">
-                            <div class="form-group">
-                                <label for="title" class="col-xs-12 col-sm-2 control-label">Tile:</label>
-                                <div class="col-xs-12 col-sm-6">
-                                    <input type="text" class="form-control" id="title" name="title" placeholder="Event Title">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="category" class="col-xs-12 col-sm-2 control-label">Category:</label>
-                                <div class="col-xs-12 col-sm-6">
-                                    <select class="form-control" id="category" name="category" form="event-details-form">
-                                        <option value="option">option</option>
-                                        <option value="option">option</option>
-                                        <option value="option">option</option>
-                                        <option value="option">option</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="location" class="col-xs-12 col-sm-2 control-label">Location:</label>
-                                <div class="col-xs-12 col-sm-6">
-                                    <input type="text" class="form-control" id="location" name="location" placeholder="Event Location">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="description" class="col-xs-12 col-sm-2  control-label">Description:</label>
-                                <div class="col-xs-12 col-sm-6">
-                                    <textarea class="form-control" id="description" name="description" placeholder="Event Description" rows="10" form="event-details-form"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="image" class="col-xs-12 col-sm-2  control-label">Image Url:</label>
-                                <div class="col-xs-12 col-sm-6">
-                                    <input type="url" class="form-control" id="image" name="image" placeholder="Event Image Url">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="date" class="col-xs-12 col-sm-2  control-label">Date:</label>
-                                <div class="col-xs-12 col-sm-6">
-                                    <input type="date" class="form-control" id="date" name="date">
-                                </div>
-                            </div>
-
-                            <div id="ticket-group">
-                                <div class="form-group">
-                                    <label class="col-xs-12 col-sm-3 col-sm-offset-4">Events Tickets</label>
-                                </div>
-                                <div class="ticket">
-                                    <div class="form-group">
-                                        <label class="col-xs-12 col-sm-2 control-label">Ticket:</label>
-                                        <div class=" col-xs-12 col-sm-6">
-                                            <select class="form-control" name="ticket-category">
-                                                <option value="option">option</option>
-                                                <option value="option">option</option>
-                                                <option value="option">option</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-xs-12 col-sm-6 col-sm-offset-2">
-                                            <input type="number" class="form-control" id="" placeholder="Number">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-xs-12 col-sm-6 col-sm-offset-2">
-                                            <button type="button" class="btn btn-danger btn-block" disabled><span class="glyphicon glyphicon-remove"></span> Remove</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-12 col-sm-6 col-sm-offset-2">
-                                    <button id="add-ticket" type="button" class="btn btn-primary btn-block"><span class="glyphicon glyphicon-plus"></span> Add ticket</button>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-xs-8 col-sm-4 col-sm-offset-2">
-                                    <button type="submit" class="btn btn-success btn-block">Create</button>
-                                </div>
-                                <div class="col-xs-4 col-sm-2">
-                                    <button type="reset" class="btn btn-default"> Cancel </button>
-                                </div>
-                            </div>
-                        </form>
                     </div>
+                  </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12">
+                    <p class="lead">Reselled:</p>
+                    <hr>
+                </div>
+                <div class="col-xs-12">
+                  <div id="reselled-group" class="row">
+                    <div class="col-xs-12">
+
+                    </div>
+                  </div>
                 </div>
 
-            </section>
-        </div>
+            </div>
+        </section>
     </div>
+
 
     <div class="back-to-top-parent">
         <button type="button" name="back-to-top" id="back-to-top" class="btn btn-primary back-to-top"><span class="glyphicon glyphicon-chevron-up"></span> TOP</button>

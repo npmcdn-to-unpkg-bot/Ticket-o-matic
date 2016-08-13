@@ -3395,9 +3395,9 @@ tbody.collapse.in {
   font-size: 14px;
   font-weight: normal;
   line-height: 1;
-  color: #E64A19;
+  /*color: #E64A19;*/
   text-align: center;
-  background-color: #E6D5B8;
+  /*background-color: #E6D5B8;*/
   border: 1px solid #ccc;
   border-radius: 4px; }
   .input-group-addon.input-sm,
