@@ -1,7 +1,8 @@
 /*
  * Innerbar animations and handlers
  */
- var search_type = 'search';
+var search_type = 'search';
+
 function innerToggle(target, parent, selector) {
     $(parent + " " + selector).each(function() {
         $(this).hide();
@@ -27,33 +28,34 @@ $("#innerbar-popup").on('focusout', "form", function() {
         }, 2000);
 
 });
+
 function searchPlaceholder(text) {
-  $("#search-group input").filter(":first").attr("placeholder",text);
-  $("#search-group").hide().removeClass("hidden").fadeIn();
-  $("#searchbydate-group").hide();
-  $("#searchbyprice-group").hide();
-}
-$("#inner-search-form").on('click',"input[name=filters]",function(){
-  var type = $(this).val();
-  if(type === 'bydate') {
-    $("#searchbydate-group").hide().removeClass("hidden").fadeIn();
-    $("#searchbyprice-group").hide();
-    $("#search-group").hide();
-  } else if (type === 'byprice') {
-    $("#searchbyprice-group").hide().removeClass("hidden").fadeIn();
+    $("#search-group input").filter(":first").attr("placeholder", text);
+    $("#search-group").hide().removeClass("hidden").fadeIn();
     $("#searchbydate-group").hide();
-    $("#search-group").hide();
-  } else if(type === 'bytitle'){
-    searchPlaceholder("Search by Events Title");
-  } else if(type === 'byloc'){
-    searchPlaceholder("Search by Events Location");
-  }
+    $("#searchbyprice-group").hide();
+}
+$("#inner-search-form").on('click', "input[name=filters]", function() {
+    var type = $(this).val();
+    if (type === 'bydate') {
+        $("#searchbydate-group").hide().removeClass("hidden").fadeIn();
+        $("#searchbyprice-group").hide();
+        $("#search-group").hide();
+    } else if (type === 'byprice') {
+        $("#searchbyprice-group").hide().removeClass("hidden").fadeIn();
+        $("#searchbydate-group").hide();
+        $("#search-group").hide();
+    } else if (type === 'bytitle') {
+        searchPlaceholder("Search by Events Title");
+    } else if (type === 'byloc') {
+        searchPlaceholder("Search by Events Location");
+    }
 });
 /*
  * Back-to-top button animations and handler
  */
 function backToTopOffset() {
-  var offset = $(document).height() - $("footer").offset().top;
+    var offset = $(document).height() - $("footer").offset().top;
     if ($(this).scrollTop() > offset) {
         $("#back-to-top").fadeIn(duration);
     } else {
@@ -73,14 +75,25 @@ $(window).scroll(function() {
 
 });
 $("#back-to-top").on('click', function(e) {
-  e.preventDefault();
+    e.preventDefault();
     $("html,body").animate({
         scrollTop: 0
     }, duration);
 });
 /*
-* Windows resize
-*/
-$( window ).resize(function() {
-
+ * ADD TICKET TO EVENT
+ */
+$("#add-ticket").on('click', function() {
+    var ticket = $(".ticket").filter(":first").clone(true);
+    $(ticket).find("button").removeAttr("disabled");
+    $(ticket).appendTo($("#ticket-group")).hide().slideDown("fast");
+});
+/*
+ * REMOVE TICKET FORM EVENT
+ */
+$(".ticket").on('click', "button", function() {
+    var ticket = $(this).closest(".ticket");
+    $(ticket).slideUp("fast", function() {
+        $(ticket).remove();
+    })
 });
