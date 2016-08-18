@@ -7,7 +7,8 @@ body {
 }
 @media screen and (max-width:767px) {
     body {
-        height: auto;
+      /* need test - otherwise set to auto */
+        height: 100%;
     }
 }
 
@@ -43,6 +44,11 @@ body {
 }
 .innerbar form .search-inline input {}
 
+.inner-cart .coins{
+  margin-left: -20px;
+  padding-left: 40px;
+  display: inline-block;
+}
 /*
 * BUTTON - bugfix
 */
@@ -68,6 +74,9 @@ body {
     position: relative;
 
 }
+/*
+* CONTENT
+*/
 .content {
   position: relative;
     min-height: 100%;
@@ -79,6 +88,16 @@ body {
     /* .push must be the same height as footer */
     height: 117px;
 }
+.content-float {
+  z-index: -1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  margin-left: -15px;
+}
+/*
+* SIDEBAR
+*/
 .sidebar {
   padding-bottom: 40px;
 }
@@ -96,13 +115,45 @@ body {
     list-style: none;
 }
 /*
-*
+* ITEMS BOX
 */
+.event .ticket-table{
+  border-collapse:separate;
+  border: 1px solid #E6D5B8;
+  border-radius: 10px;
+}
+.item-box{
+  /*border-radius: 25px;*/
+  background-color: white;
+  /*padding: 15px;
+  margin: 5px;*/
+}
+.table , .table tr, .table thead,.table tbody {
+  border-radius: 10px;
+}
 
+.table > thead > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > th,
+.table > tbody > tr > td,
+.table > tfoot > tr > th,
+.table > tfoot > tr > td {
+  border-top: 1px solid #E6D5B8; }
+.table > thead > tr > th {
+  border-bottom: 2px solid #E6D5B8; }
+  /*
+  * CART
+  */
+  .cart-action{
+    padding-top: 60px;
+  }
+  .cart-action > div[class^=col-] {
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
 /*
 * FOOTER
 */
-
 footer {
     height: 81px;
     background-color: #F44336;

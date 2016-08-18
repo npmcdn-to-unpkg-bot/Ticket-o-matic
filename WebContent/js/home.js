@@ -3,19 +3,22 @@
  */
 var search_type = 'search';
 
-function innerToggle(target, parent, selector) {
-    $(parent + " " + selector).each(function() {
+function innerToggle(target, parent, selector,tohide) {
+    $(parent + " " + tohide).each(function() {
         $(this).hide();
     });
-    $("#inner-" + target + "-form").show();
+    $("#inner-" + target + "-"+selector).show();
     $("#innerbar-popup").hide().removeClass("hidden").slideToggle();
-    $("#inner-" + target + "-form input:visible:first").focus();
+    $("#inner-" + target + "-"+selector+" input:visible:first").focus();
 }
 var innerbar_timeout;
 $(".navbar-action-group").on('click', "button,a", function() {
     var target = $(this).attr("aria-label");
     if (target !== "cart") {
-        innerToggle(target, "#innerbar-popup", "form");
+        innerToggle(target, "#innerbar-popup", "form","form");
+        $("#innerbar-popup #inner-cart-div").hide();
+    } else {
+      innerToggle(target,"#innerbar-popup","div","form");
     }
 });
 $("#innerbar-popup").on('focus', "input", function() {
@@ -91,7 +94,7 @@ $("#add-ticket").on('click', function() {
 /*
  * REMOVE TICKET FORM EVENT
  */
-$(".ticket").on('click', "button", function() {
+$("#create-event .ticket").on('click', "button", function() {
     var ticket = $(this).closest(".ticket");
     $(ticket).slideUp("fast", function() {
         $(ticket).remove();
