@@ -1,6 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,7 +16,6 @@
     <link rel="stylesheet" href="./css/custom.css">
 
 </head>
-
 <body>
     <header>
         <nav class="navbar navbar-inverse navbar-static-top">
@@ -27,7 +27,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="index.html">
+                    <a class="navbar-brand" href="home">
                         <img alt="Ticket-o-Matic" src="./assets/all.png"></a>
                 </div>
                 <div class="collapse navbar-collapse " id="navbar-collapse">
@@ -125,7 +125,7 @@
                     </form>
                     <div id="inner-cart-div" class="inner-cart row text-center">
                         <div class="col-xs-12">
-                            <button type="button" class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Your cart</button>
+                            <a href="home?action=cart"><button type="button" class="btn btn-success"><span class="glyphicon glyphicon-shopping-cart"></span> Your cart</button></a>
                             <span class="coins"> Coins: <strong>0.00</strong> </span>
                         </div>
                     </div>
@@ -133,83 +133,10 @@
             </div>
         </div>
     </header>
-    <div class="content container">
-        <section id="cart">
-            <div class="row">
-                <div class="col-xs-12">
-                    <div class="page-header">
-                        <h1>Your Cart</h1>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-xs-12">
-                    <div id="item-cart" class="row">
-                        <div class="col-xs-12">
-                            <div class="ticket row">
-                                <div class="col-sm-3">
-                                    <a href="#" class="thumbnail">
-                                        <img src="" alt="">
-                                    </a>
-                                </div>
-                                <div class="col-sm-5">
-                                    <p>
-                                        <strong>The Who</strong>
-                                    </p>
-                                    <p>
-                                        The date
-                                    </p>
-                                    <p>
-                                        The location
-                                    </p>
-
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <p class="lead">
-                                                50€
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <p>
-                                                <form class="form-inline" method="post">
-                                                    <input type="number" name="name" value="1">
-                                                </form>
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <p>
-                                                <button type="button" class="btn btn-danger">
-                                                    Remove
-                                                </button>
-                                            </p>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="cart-action row">
-                <div class="col-xs-12 col-sm-6">
-                    <button type="button" class="btn btn-success btn-block">Check out</button>
-                </div>
-                <div class="col-xs-12 col-sm-4">
-                    <button type="button" class="btn btn-warning btn-block">Clear Cart</button>
-                </div>
-            </div>
-        </section>
-    </div>
-
-
+    
+    <!-- Include Content -->
+	<jsp:include page="${page}"/>
+		
     <div class="back-to-top-parent">
         <button type="button" name="back-to-top" id="back-to-top" class="btn btn-primary back-to-top"><span class="glyphicon glyphicon-chevron-up"></span> TOP</button>
     </div>
@@ -229,7 +156,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="./js/home.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 
 </html>
