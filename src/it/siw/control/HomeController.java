@@ -38,82 +38,85 @@ import it.siw.service.UserService;
  */
 @WebServlet("/home")
 public class HomeController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public HomeController() {
-	super();
-    }
-
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-     *      response)
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	HttpSession session = request.getSession();
-	String action = request.getParameter("action");
-
-	action = (action == null) ? "" : action;
-	String page;
-
-	User user = (User) session.getAttribute("user");
-	UserService service;
-
-	switch (action) {
-	case "wishlist":
-	    page = "wishlist";
-	    service = new UserService();
-	    Map<Integer, Wishlist> wishlists = service.showWishlist(user.getId(), 0, 10);
-	    request.setAttribute("wishlists", wishlists);
-	    break;
-	case "order":
-	    page = "order";
-	    service = new UserService();
-	    Map<Integer, Order> orders = service.showOrders(user.getId(), 0, 10);
-	    request.setAttribute("orders", orders);
-	    break;
-	case "create":
-	    if (Type.Organizer.equals(user.getType())) {
-		page = "details";
-	    } else {
-		page = "details";
-	    }
-	    break;
-	case "cart":
-	    page = "cart";
-	    break;
-	case "event":
-	    page = "event";
-	    break;
-	case "registration":
-	    page = "registration";
-	    break;
-	case "search":
-	    page = "search";
-	    break;
-	default:
-	    page = "main";
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public HomeController() {
+		super();
 	}
 
-	request.setAttribute("page", "content/" + page + ".html");
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String action = request.getParameter("action");
 
-	// this servlet has to forward only to the home.jsp
-	RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/home.jsp");
-	dispatcher.forward(request, response);
-    }
+		action = (action == null) ? "" : action;
+		String page;
 
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-     *      response)
-     */
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-	    throws ServletException, IOException {
-	doGet(request, response);
-    }
+		User user = (User) session.getAttribute("user");
+		UserService service;
+
+		switch (action) {
+		case "wishlist":
+			page = "wishlist";
+			service = new UserService();
+			Map<Integer, Wishlist> wishlists = service.showWishlist(user.getId(), 0, 10);
+			request.setAttribute("wishlists", wishlists);
+			break;
+		case "order":
+			page = "order";
+			service = new UserService();
+			Map<Integer, Order> orders = service.showOrders(user.getId(), 0, 10);
+			request.setAttribute("orders", orders);
+			break;
+		case "create":
+			if (Type.Organizer.equals(user.getType())) {
+				page = "details";
+			} else {
+				page = "details";
+			}
+			break;
+		case "cart":
+			page = "cart";
+			break;
+		case "account_details":
+			page = "account_details";
+			break;
+		case "event":
+			page = "event";
+			break;
+		case "registration":
+			page = "registration";
+			break;
+		case "search":
+			page = "search";
+			break;
+		default:
+			page = "main";
+		}
+
+		request.setAttribute("page", "content/" + page + ".html");
+
+		// this servlet has to forward only to the home.jsp
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/home.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		doGet(request, response);
+	}
 
 }
