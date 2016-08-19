@@ -59,35 +59,41 @@ public class HomeController extends HttpServlet {
 
 		action = (action == null) ? "" : action;
 		String page;
+		String account_content = null;
 
 		User user = (User) session.getAttribute("user");
 		UserService service;
 
 		switch (action) {
+		case "details":
+			account_content = "details";
+			page = "account";
+			break;
 		case "wishlist":
-			page = "wishlist";
+			account_content = "wishlist";
+			page = "account";
 			service = new UserService();
 			Map<Integer, Wishlist> wishlists = service.showWishlist(user.getId(), 0, 10);
 			request.setAttribute("wishlists", wishlists);
 			break;
 		case "order":
-			page = "order";
+			account_content = "order";
+			page = "account";
 			service = new UserService();
 			Map<Integer, Order> orders = service.showOrders(user.getId(), 0, 10);
 			request.setAttribute("orders", orders);
 			break;
 		case "create":
 			if (Type.Organizer.equals(user.getType())) {
-				page = "details";
+				account_content = "create_event";
+				page = "account";
 			} else {
-				page = "details";
+				account_content = "details";
+				page = "account";
 			}
 			break;
 		case "cart":
 			page = "cart";
-			break;
-		case "account_details":
-			page = "account_details";
 			break;
 		case "event":
 			page = "event";
@@ -102,7 +108,10 @@ public class HomeController extends HttpServlet {
 			page = "main";
 		}
 
-		request.setAttribute("page", "content/" + page + ".html");
+		if ("account".equals(page) && account_content != null) {
+			request.setAttribute("account_content", "content/" + account_content + ".jsp");
+		}
+		request.setAttribute("page", "content/" + page + ".jsp");
 
 		// this servlet has to forward only to the home.jsp
 		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/home.jsp");
