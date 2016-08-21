@@ -3,7 +3,6 @@ package it.siw.control;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -68,8 +67,7 @@ public class AccountServlet extends HttpServlet {
 			break;
 		case "logout":
 			request.getSession().invalidate();
-			RequestDispatcher dispatcher = request.getRequestDispatcher("home");
-			dispatcher.forward(request, response);
+			response.sendRedirect("home");
 			break;
 		default:
 			result.addProperty("result", "FAIL");
