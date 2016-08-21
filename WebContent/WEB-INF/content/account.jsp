@@ -15,7 +15,7 @@
                             <a href="home?action=details"><span class="glyphicon glyphicon-user"></span> Account Details</a>
                         </li>
                         
-						<c:if test="${user.type eq Organizer} ">
+						<c:if test="${user.type == 'Organizer'}">
                         <li>
                             <a href="home?action=eventlist"><span class="glyphicon glyphicon-calendar"></span> Organizer Events</a>
                         </li>
