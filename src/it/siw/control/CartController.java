@@ -3,7 +3,6 @@ package it.siw.control;
 import java.io.BufferedReader;
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -67,10 +66,6 @@ public class CartController extends HttpServlet {
 	case "clear":
 	    new CartService().clear(cart, result);
 	    session.setAttribute("cart", cart);
-	    break;
-	case "view":
-	    RequestDispatcher dispatcher = request.getRequestDispatcher("home?action=cart");
-	    dispatcher.forward(request, response);
 	    break;
 	default:
 	    break;

@@ -15,33 +15,33 @@
                 <label for="username" class="col-xs-12 col-sm-2 control-label">Username:</label>
                 <div class="col-xs-12 col-sm-6">
                     <p id="username" class="form-control-static">
-                        Your Username
+                        ${user.username}
                     </p>
                 </div>
             </div>
             <div class="form-group">
                 <label for="name" class="col-xs-12 col-sm-2 control-label">Name:</label>
                 <div class="col-xs-12 col-sm-6">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Name">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="${user.name }">
                 </div>
             </div>
             <div class="form-group">
                 <label for="surname" class="col-xs-12 col-sm-2 control-label">Surname:</label>
                 <div class="col-xs-12 col-sm-6">
-                    <input type="text" class="form-control" id="surname" name="surname" placeholder="Surname">
+                    <input type="text" class="form-control" id="surname" name="surname" placeholder="${user.surname }">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="email" class="col-xs-12 col-sm-2  control-label">Email:</label>
                 <div class="col-xs-12 col-sm-6">
-                    <input type="text" class="form-control" id="email" name="email" placeholder="Email">
+                    <input type="text" class="form-control" id="email" name="email" placeholder="${user.email }">
                 </div>
             </div>
             <div class="form-group">
                 <label for="password" class="col-xs-12 col-sm-2  control-label">Password:</label>
                 <div class="col-xs-12 col-sm-6">
-                    <input type="text" class="form-control" id="password" name="password" placeholder="Password">
+                    <input type="text" class="form-control" id="password" name="password" placeholder="New Password">
                 </div>
             </div>
             <div class="form-group">

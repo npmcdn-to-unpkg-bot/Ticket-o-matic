@@ -35,7 +35,7 @@
 										Login</a></li>
 							</c:when>
 							<c:otherwise>
-								<li class="navbar-action-group visible-xs"><a href="home?action=account_details"
+								<li class="navbar-action-group visible-xs"><a href="home?action=details"
 									aria-label="account"><span class="glyphicon glyphicon-user"></span>
 										Account</a></li>
 							</c:otherwise>
@@ -58,7 +58,7 @@
 								</button>
 							</c:when>
 							<c:otherwise>
-								<a href="home?action=account_details" class="btn btn-default"
+								<a href="home?action=details" class="btn btn-default"
 									aria-label="account"><span class="glyphicon glyphicon-user"></span></a>
 							</c:otherwise>
 						</c:choose>
