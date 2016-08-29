@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-offset-4 col-sm-8 ">
                     <div class="page-header">
-                        <h3>${user.name} ${user.surname} ${user.type }</h3>
+                        <h3>${user.name} ${user.surname}</h3>
                     </div>
                     <ul class="nav account-nav-list">
                         <li>
