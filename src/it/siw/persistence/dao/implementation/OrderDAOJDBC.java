@@ -5,7 +5,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.zaxxer.hikari.HikariDataSource;
@@ -27,25 +29,32 @@ public class OrderDAOJDBC implements OrderDAO {
     }
 
     @Override
-    public void create(Order modelObject) {
+    public List<Integer> create(Order modelObject) {
+	List<Integer> items = new ArrayList<>();
 	Connection connection = null;
 	String query = null;
 	PreparedStatement statement = null;
-
+	ResultSet result = null;
 	try {
 	    connection = dataSource.getConnection();
-	    query = " insert into Order(idOrder,Date,User_id,TotalCost) values(?,?,?,?)";
+	    query = "SELECT ticket_id FROM order_checkout(?,?,?,?)";
 	    statement = connection.prepareStatement(query);
-	    statement.setInt(1, modelObject.getId());
-	    statement.setDate(2, (Date) modelObject.getDate());
-	    statement.setInt(3, modelObject.getUser().getId());
-	    statement.executeUpdate();
+	    statement.setInt(1, modelObject.getUser().getId());
+	    statement.setString(2, modelObject.getUser().getSession_id());
+	    statement.setArray(3, connection.createArrayOf("INT", modelObject.getSells().keySet().toArray()));
+	    statement.setFloat(4, modelObject.getTotal());
+	    result = statement.executeQuery();
+	    while (result.next()) {
+		items.add(result.getInt(1));
+	    }
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	} finally {
 	    DAOUtility.close(connection);
 	    DAOUtility.close(statement);
 	}
+
+	return items;
     }
 
     @Override

@@ -63,6 +63,7 @@ public class AccountServlet extends HttpServlet {
 	    System.out.println(result.toString());
 	    if (user != null) {
 		HttpSession session = request.getSession();
+		user.setSession_id(session.getId());
 		session.setAttribute("user", user);
 	    }
 	    break;

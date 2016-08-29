@@ -1,5 +1,6 @@
 package it.siw.persistence.dao;
 
+import java.util.List;
 import java.util.Map;
 
 import it.siw.model.Order;
@@ -7,7 +8,7 @@ import it.siw.model.User;
 
 public interface OrderDAO {
 
-    public void create(Order modelObject);
+    public List<Integer> create(Order modelObject);
 
     public void delete(Order o);
 

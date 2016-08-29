@@ -32,7 +32,6 @@ public class AccountService {
 		result.addProperty("reason", "Sorry, something went wrong, try again within few minutes");
 	    }
 	}
-	System.err.println(source);
     }
 
     public static User signIn(String data, JsonObject result) {

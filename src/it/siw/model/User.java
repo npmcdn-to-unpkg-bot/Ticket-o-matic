@@ -6,6 +6,7 @@ import java.util.Map;
 public class User {
 
     private int id;
+    private String session_id;
     private String username;
     private String password;
     private String email;
@@ -38,6 +39,14 @@ public class User {
 
     public void setId(int id) {
 	this.id = id;
+    }
+
+    public String getSession_id() {
+	return session_id;
+    }
+
+    public void setSession_id(String session_id) {
+	this.session_id = session_id;
     }
 
     public String getUsername() {

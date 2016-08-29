@@ -1,11 +1,16 @@
 package it.siw.service;
 
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import it.siw.model.Cart;
+import it.siw.model.Order;
 import it.siw.model.Sell;
 import it.siw.model.User;
+import it.siw.persistence.DAOFactory;
+import it.siw.persistence.dao.OrderDAO;
 
 public class CartService {
 
@@ -40,12 +45,32 @@ public class CartService {
     public void buy(Cart cart, User user, JsonObject result) {
 	if (user != null) {
 	    if (!cart.getTickets().isEmpty()) {
-		// TODO THE ORDER PLACEMENT CODE HERE !!
-		result.addProperty("result", "SUCCESS");
-		result.addProperty("message", " Congratulations, your order has successfully been registered !");
+		String reason = "Ops, your reservation for the items below is expired and they are not longer available<br>";
+		Boolean error = Boolean.FALSE;
+		DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+		OrderDAO orderdao = factory.getOrderDAO();
+		Order order = new Order(cart, user);
+		List<Integer> items = orderdao.create(order);
+		reason += "<ul>";
+		for (Integer itemid : order.getSells().keySet()) {
+		    if (items.contains(itemid)) {
+			reason += "<li>" + order.getSells().get(itemid).getTicket().getEvent().getName() + " "
+				+ order.getSells().get(itemid).getPrice() + "</li>";
+		    }
+		}
+		reason += "</ul>";
+		if (error) {
+		    result.addProperty("result", "FAIL");
+		    result.addProperty("reason", reason);
+		} else {
+		    result.addProperty("result", "SUCCESS");
+		    result.addProperty("message", "Congratulations, your order has been successfully registered !");
+		}
 	    } else {
-
+		result.addProperty("result", "FAIL");
+		result.addProperty("reason", "Your cart is empty, we are sorry");
 	    }
+	    cart.getTickets().clear();
 	} else {
 	    result.addProperty("callback", "SIGNIN");
 	    result.addProperty("result", "FAIL");

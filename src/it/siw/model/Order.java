@@ -1,6 +1,7 @@
 package it.siw.model;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Order {
@@ -14,6 +15,13 @@ public class Order {
 
     public Order() {
 	// TODO Auto-generated constructor stub
+    }
+
+    public Order(Cart cart, User user) throws NullPointerException {
+	this.user = user;
+	this.sells = new HashMap<>(cart.getTickets());
+	this.date = new Date(System.currentTimeMillis());
+	this.total = cart.getTotal();
     }
 
     public int getId() {
