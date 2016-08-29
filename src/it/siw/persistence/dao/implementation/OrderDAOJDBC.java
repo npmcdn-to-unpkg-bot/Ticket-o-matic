@@ -136,6 +136,7 @@ public class OrderDAOJDBC implements OrderDAO {
 		    Sell sell = new Sell();
 		    sell.setId(result.getInt("idsell"));
 		    sell.setPrice(result.getFloat("price"));
+		    System.out.println(result.getFloat("price"));
 		    User user = new User();
 		    user.setId(result.getInt("iduser"));
 		    user.setUsername(result.getString("username"));
@@ -196,7 +197,7 @@ public class OrderDAOJDBC implements OrderDAO {
 		    order.setId(result.getInt("idorder"));
 		    long time = result.getDate("date").getTime();
 		    order.setDate(new java.util.Date(time));
-		    order.setTotal(result.getLong("totalcost"));
+		    order.setTotal(result.getFloat("totalcost"));
 		    orders.put(order.getId(), order);
 		}
 	    }

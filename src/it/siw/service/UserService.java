@@ -126,6 +126,7 @@ public class UserService {
     }
 
     public void addEventWishlist(String json, JsonObject result) {
+	System.out.println(json);
 	DAOFactory postgres = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
 	WishlistDAO wishlistdao = postgres.getWishlistDAO();
 	Gson gson = new Gson();
@@ -141,7 +142,7 @@ public class UserService {
 	    result.addProperty("message", "The Event has been added to the wishlist!");
 	} else {
 	    result.addProperty("result", "FAIL");
-	    result.addProperty("reason", "We are sorry, you canno't add this event to the selected wishlist");
+	    result.addProperty("reason", "We are sorry, you cannot add this event to the selected wishlist");
 	}
     }
 
@@ -180,7 +181,7 @@ public class UserService {
 	DAOFactory postgres = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
 	OrderDAO orderdao = postgres.getOrderDAO();
 	Gson gson = new Gson();
-	Wishlist source = gson.fromJson(json, Wishlist.class);
+	Order source = gson.fromJson(json, Order.class);
 	Order tmp = orderdao.findById(source.getId());
 	if (tmp != null) {
 	    Type type = new TypeToken<Map<Integer, Sell>>() {

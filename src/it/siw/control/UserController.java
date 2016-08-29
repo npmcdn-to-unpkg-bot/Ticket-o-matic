@@ -23,14 +23,6 @@ public class UserController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UserController() {
-	super();
-	// TODO Auto-generated constructor stub
-    }
-
-    /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
      *      response)
      */
@@ -59,6 +51,7 @@ public class UserController extends HttpServlet {
 	    }
 	    break;
 	}
+
 	case "addwishlist": {
 	    UserService service = new UserService();
 	    service.addWishlist(json, user, result);

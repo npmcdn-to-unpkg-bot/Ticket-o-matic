@@ -40,13 +40,32 @@
                         <h5><span class="glyphicon glyphicon-bold"></span> Description:</h5>
                         <p>
                         ${event.description }
-                            
+
                         </p>
                     </div>
                     <div id="event-location" class="col-xs-12">
                         <h5><span class="glyphicon glyphicon-map-marker"></span> Location:</h5>
                         <p data-name="location">
                             ${event.location }
+                        </p>
+                    </div>
+                    <div class="col-xs-12">
+                        <h5><span class="glyphicon glyphicon-star"></span> Add to Wishlist:</h5>
+                        <p>
+                            <form id="add-eventwishlist-form" class="form-inline">
+                                <div class="input-group">
+                                <select class="form-control" name="id">
+                                    <option value="1">Lista dei Desideri</option>
+                                    <option value="8">Nuovi Eventi</option>
+                                </select>
+                                  <span class="input-group-btn">
+                                  <button type="submit" class="btn btn-default">
+                                    Add
+                                  </button></span>
+
+                                </div>
+
+                            </form>
                         </p>
                     </div>
                 </div>
