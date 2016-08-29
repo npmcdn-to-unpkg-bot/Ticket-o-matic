@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.JsonObject;
 
 import it.siw.model.Cart;
+import it.siw.model.User;
 import it.siw.service.CartService;
 
 /**
@@ -44,6 +45,7 @@ public class CartController extends HttpServlet {
 	    cart = new Cart();
 	    session.setAttribute("cart", cart);
 	}
+	User user = (User) session.getAttribute("user");
 	BufferedReader br = new BufferedReader(request.getReader());
 	String json = null;
 	if (br != null) {
@@ -51,21 +53,19 @@ public class CartController extends HttpServlet {
 	}
 	String action = request.getParameter("action");
 	JsonObject result = new JsonObject();
+
 	switch (action) {
 	case "add":
 	    new CartService().addItem(json, cart, result);
 	    break;
 	case "remove":
 	    new CartService().removeItem(json, cart, result);
-	    session.setAttribute("cart", cart);
 	    break;
-	case "buy":
-	    new CartService().buy(cart, result);
-	    session.setAttribute("cart", cart);
+	case "checkout":
+	    new CartService().buy(cart, user, result);
 	    break;
 	case "clear":
 	    new CartService().clear(cart, result);
-	    session.setAttribute("cart", cart);
 	    break;
 	default:
 	    break;

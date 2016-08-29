@@ -25,65 +25,66 @@ import it.siw.service.AccountService;
  */
 @WebServlet("/account")
 public class AccountServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public AccountServlet() {
-		super();
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public AccountServlet() {
+	super();
+    }
+
+    /**
+     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
+
+	// read the ajax request
+	BufferedReader br = new BufferedReader(request.getReader());
+	String json = "";
+	if (br != null) {
+	    json = br.readLine();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	// get the action
+	String action = request.getParameter("action");
+	// inizialize json response object;
+	JsonObject result = new JsonObject();
 
-		// read the ajax request
-		BufferedReader br = new BufferedReader(request.getReader());
-		String json = "";
-		if (br != null) {
-			json = br.readLine();
-		}
-
-		// get the action
-		String action = request.getParameter("action");
-		// inizialize json response object;
-		JsonObject result = new JsonObject();
-
-		switch (action) {
-		case "signup":
-			AccountService.signUp(json, result);
-			break;
-		case "signin":
-			User user = AccountService.signIn(json, result);
-			if (user != null) {
-				HttpSession session = request.getSession();
-				session.setAttribute("user", user);
-			}
-			break;
-		case "logout":
-			request.getSession().invalidate();
-			response.sendRedirect("home");
-			break;
-		default:
-			result.addProperty("result", "FAIL");
-			break;
-		}
-		response.getWriter().write(result.toString());
+	switch (action) {
+	case "signup":
+	    AccountService.signUp(json, result);
+	    break;
+	case "signin":
+	    User user = AccountService.signIn(json, result);
+	    System.out.println(result.toString());
+	    if (user != null) {
+		HttpSession session = request.getSession();
+		session.setAttribute("user", user);
+	    }
+	    break;
+	case "logout":
+	    request.getSession().invalidate();
+	    response.sendRedirect("home");
+	    break;
+	default:
+	    result.addProperty("result", "FAIL");
+	    break;
 	}
+	response.getWriter().write(result.toString());
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	@Override
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		doGet(request, response);
-	}
+    /**
+     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+     *      response)
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	    throws ServletException, IOException {
+	doGet(request, response);
+    }
 
 }

@@ -50,14 +50,12 @@ public class EventController extends HttpServlet {
 	    }
 	    break;
 	case "UPDATE":
-		EventService eventService1 =new EventService(json);
-		response.getWriter().append("GOOD JOB");
-		eventService1.updateEvent(action);
+	    EventService eventService1 = new EventService(json);
+	    response.getWriter().append("GOOD JOB");
+	    eventService1.updateEvent(action);
 	    break;
 	case "SHOW":
-		EventService eventService2 = new EventService(json);
-		response.getWriter().append("GOOD JOB");
-		eventService2.showEvent(json);
+
 	    break;
 	}
 
