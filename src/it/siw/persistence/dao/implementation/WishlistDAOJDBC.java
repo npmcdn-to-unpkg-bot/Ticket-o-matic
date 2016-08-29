@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -117,8 +116,7 @@ public class WishlistDAOJDBC implements WishlistDAO {
 		    Event event = new Event();
 		    event.setId(result.getInt("idevent"));
 		    event.setName(result.getString("name"));
-		    long time = result.getDate("date").getTime();
-		    event.setDate(new Date(time));
+		    event.setDate(result.getDate("date").toLocalDate());
 		    event.setLocation(result.getString("location"));
 		    event.setImage(result.getString("image"));
 		    wishlist.getEvents().put(event.getId(), event);

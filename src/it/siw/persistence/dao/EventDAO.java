@@ -4,7 +4,6 @@ import java.util.Date;
 import java.util.Map;
 
 import it.siw.model.Event;
-import it.siw.model.Organizer;
 import it.siw.model.User;
 
 public interface EventDAO {
@@ -27,7 +26,7 @@ public interface EventDAO {
 
     public Map<Integer, Event> findByDate(Date date, Integer offset, Integer limit);
 
-    public Map<Integer, Event> findByPrice(float min,float max);
+    public Map<Integer, Event> findByPrice(float min, float max);
 
     public Map<Integer, Event> findByPrice(Long min, Long max, Integer offset, Integer limit);
 
@@ -42,6 +41,8 @@ public interface EventDAO {
     public Map<Integer, Event> findByCategory(String category);
 
     public Map<Integer, Event> findByCategory(String category, Integer offset, Integer limit);
+
+    public Map<Integer, Event> findTop();
 
     public void update(Event e);
 

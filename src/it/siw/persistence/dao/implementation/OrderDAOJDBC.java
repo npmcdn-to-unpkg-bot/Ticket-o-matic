@@ -126,7 +126,7 @@ public class OrderDAOJDBC implements OrderDAO {
 		while (result.next()) {
 		    Sell sell = new Sell();
 		    sell.setId(result.getInt("idsell"));
-		    sell.setPrice(result.getLong("price"));
+		    sell.setPrice(result.getFloat("price"));
 		    User user = new User();
 		    user.setId(result.getInt("iduser"));
 		    user.setUsername(result.getString("username"));
@@ -140,8 +140,8 @@ public class OrderDAOJDBC implements OrderDAO {
 		    Event event = new Event();
 		    event.setId(result.getInt("idevent"));
 		    event.setName(result.getString("name"));
-		    long time = result.getDate("date").getTime();
-		    event.setDate(new java.util.Date(time));
+
+		    event.setDate(result.getDate("date").toLocalDate());
 		    event.setLocation(result.getString("location"));
 		    event.setImage(result.getString("image"));
 		    ticket.setEvent(event);

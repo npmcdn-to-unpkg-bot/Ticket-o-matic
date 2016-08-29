@@ -13,7 +13,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import it.siw.model.Event;
 import it.siw.model.EventCategory;
-import it.siw.model.Organizer;
 import it.siw.model.User;
 import it.siw.persistence.DAOUtility;
 import it.siw.persistence.dao.EventDAO;
@@ -36,7 +35,7 @@ public class EventDaoJDBC implements EventDAO {
 	    statement = connection.prepareStatement(query);
 	    statement.setString(1, modelObject.getName());
 	    statement.setString(2, modelObject.getLocation());
-	    long time = modelObject.getDate().getTime();
+	    long time = modelObject.getDate().toEpochDay();
 	    statement.setDate(3, new java.sql.Date(time));
 	    statement.setString(4, modelObject.getDescription());
 	    statement.setBoolean(5, modelObject.getSuspended());
@@ -58,8 +57,34 @@ public class EventDaoJDBC implements EventDAO {
 
     @Override
     public Event findById(Integer id) {
-	// TODO Auto-generated method stub
-	return null;
+	Event event = null;
+	Connection connection = null;
+	String query = null;
+	PreparedStatement statement = null;
+	ResultSet result = null;
+	try {
+	    connection = datasource.getConnection();
+	    query = "Select * from event where idevent = ?";
+	    statement = connection.prepareStatement(query);
+	    statement.setInt(1, id);
+	    result = statement.executeQuery();
+	    while (result.next()) {
+		event = new Event();
+		event.setId(result.getInt("idevent"));
+		event.setName(result.getString("name"));
+		event.setDescription(result.getString("description"));
+		event.setDate(result.getDate("date").toLocalDate());
+		event.setLocation(result.getString("location"));
+	    }
+
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	} finally {
+	    DAOUtility.close(connection);
+	    DAOUtility.close(statement);
+	    DAOUtility.close(result);
+	}
+	return event;
     }
 
     @Override
@@ -97,8 +122,7 @@ public class EventDaoJDBC implements EventDAO {
 		event.setName(result.getString("Name"));
 		event.setLocation(result.getString("Location"));
 		event.setDescription(result.getString("Description"));
-		long time = result.getDate("Date").getTime();
-		event.setDate(new Date(time));
+		event.setDate(result.getDate("Date").toLocalDate());
 		event.setSuspended(result.getBoolean("Suspended"));
 		EventCategory category = new EventCategory();
 		category.setId(result.getInt("idEventCategory"));
@@ -143,8 +167,7 @@ public class EventDaoJDBC implements EventDAO {
 		event.setId(result.getInt("E.idEvent"));
 		event.setName(result.getString("E.Name"));
 		event.setLocation(result.getString("E.Location"));
-		long time = result.getDate("E.Date").getTime();
-		event.setDate(new Date(time));
+		event.setDate(result.getDate("E.Date").toLocalDate());
 		event.setSuspended(result.getBoolean("E.Suspended"));
 		EventCategory category = new EventCategory();
 		category.setId(result.getInt("EC.idEventCategory"));
@@ -168,7 +191,7 @@ public class EventDaoJDBC implements EventDAO {
     }
 
     @Override
-    public Map<Integer, Event> findByPrice(float min,float max) {
+    public Map<Integer, Event> findByPrice(float min, float max) {
 	Map<Integer, Event> events = new HashMap<>();
 	Connection connection = null;
 	String query = null;
@@ -192,8 +215,8 @@ public class EventDaoJDBC implements EventDAO {
 		event.setId(result.getInt("E.idEvent"));
 		event.setName(result.getString("E.Name"));
 		event.setLocation(result.getString("E.Location"));
-		long time = result.getDate("E.Date").getTime();
-		event.setDate(new Date(time));
+
+		event.setDate(result.getDate("E.Date").toLocalDate());
 		event.setSuspended(result.getBoolean("E.Suspended"));
 		EventCategory category = new EventCategory();
 		category.setId(result.getInt("EC.idEventCategory"));
@@ -238,8 +261,8 @@ public class EventDaoJDBC implements EventDAO {
 		event.setId(result.getInt("E.idEvent"));
 		event.setName(result.getString("E.Name"));
 		event.setLocation(result.getString("E.Location"));
-		long time = result.getDate("E.Date").getTime();
-		event.setDate(new Date(time));
+
+		event.setDate(result.getDate("E.Date").toLocalDate());
 		event.setSuspended(result.getBoolean("E.Suspended"));
 		EventCategory category = new EventCategory();
 		category.setId(result.getInt("EC.idEventCategory"));
@@ -286,8 +309,8 @@ public class EventDaoJDBC implements EventDAO {
 		event.setId(result.getInt("E.idEvent"));
 		event.setName(result.getString("E.Name"));
 		event.setLocation(result.getString("E.Location"));
-		long time = result.getDate("E.Date").getTime();
-		event.setDate(new Date(time));
+
+		event.setDate(result.getDate("E.Date").toLocalDate());
 		event.setSuspended(result.getBoolean("E.Suspended"));
 		EventCategory category = new EventCategory();
 		category.setId(result.getInt("EC.idEventCategory"));
@@ -328,8 +351,8 @@ public class EventDaoJDBC implements EventDAO {
 		event.setId(result.getInt("E.idEvent"));
 		event.setName(result.getString("E.Name"));
 		event.setLocation(result.getString("E.Location"));
-		long time = result.getDate("E.Date").getTime();
-		event.setDate(new Date(time));
+
+		event.setDate(result.getDate("E.Date").toLocalDate());
 		event.setSuspended(result.getBoolean("E.Suspended"));
 		EventCategory category = new EventCategory();
 		category.setId(result.getInt("EC.idEventCategory"));
@@ -363,7 +386,7 @@ public class EventDaoJDBC implements EventDAO {
 	    statement = connection.prepareStatement(query);
 	    statement.setString(1, modelObject.getName());
 	    statement.setString(2, modelObject.getLocation());
-	    statement.setDate(3, new java.sql.Date(modelObject.getDate().getTime()));
+	    statement.setDate(3, new java.sql.Date(modelObject.getDate().toEpochDay()));
 	    statement.setBoolean(4, modelObject.getSuspended());
 	    statement.setInt(5, modelObject.getCategory().getId());
 	    statement.setInt(6, modelObject.getOrganizer().getId());
@@ -379,6 +402,35 @@ public class EventDaoJDBC implements EventDAO {
 	    DAOUtility.close(statement);
 	}
 
+    }
+
+    @Override
+    public Map<Integer, Event> findTop() {
+	Map<Integer, Event> events = new HashMap<>();
+	Connection connection = null;
+	String query = null;
+	PreparedStatement statement = null;
+	ResultSet result = null;
+	try {
+	    connection = datasource.getConnection();
+	    query = "SELECT e.idevent,e.name,e.image FROM top_events() as t join event as e on t.event_id = e.idevent ;";
+	    statement = connection.prepareStatement(query);
+	    result = statement.executeQuery();
+	    while (result.next()) {
+		Event event = new Event();
+		event.setId(result.getInt("idevent"));
+		event.setName(result.getString("name"));
+		event.setImage(result.getString("image"));
+		events.put(event.getId(), event);
+	    }
+
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	} finally {
+	    DAOUtility.close(connection);
+	    DAOUtility.close(statement);
+	}
+	return events;
     }
 
     @Override
@@ -403,48 +455,46 @@ public class EventDaoJDBC implements EventDAO {
 
     }
 
-	@Override
-	public Integer findLastId(User o) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Integer findLastId(User o) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	@Override
-	public Map<Integer, Event> findByName(String name, Integer offset, Integer limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Map<Integer, Event> findByName(String name, Integer offset, Integer limit) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	@Override
-	public Map<Integer, Event> findByDate(Date date, Integer offset, Integer limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Map<Integer, Event> findByDate(Date date, Integer offset, Integer limit) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	@Override
-	public Map<Integer, Event> findByPrice(Long min, Long max, Integer offset, Integer limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Map<Integer, Event> findByPrice(Long min, Long max, Integer offset, Integer limit) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	@Override
-	public Map<Integer, Event> findByLocation(String location, Integer offset, Integer limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Map<Integer, Event> findByLocation(String location, Integer offset, Integer limit) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	@Override
-	public Map<Integer, Event> findByGuest(String guest, Integer offset, Integer limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Map<Integer, Event> findByGuest(String guest, Integer offset, Integer limit) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
-	@Override
-	public Map<Integer, Event> findByCategory(String category, Integer offset, Integer limit) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-  
+    @Override
+    public Map<Integer, Event> findByCategory(String category, Integer offset, Integer limit) {
+	// TODO Auto-generated method stub
+	return null;
+    }
 
 }

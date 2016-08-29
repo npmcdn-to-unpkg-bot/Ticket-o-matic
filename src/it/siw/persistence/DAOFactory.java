@@ -3,6 +3,8 @@ package it.siw.persistence;
 import it.siw.persistence.dao.EventCategoryDAO;
 import it.siw.persistence.dao.EventDAO;
 import it.siw.persistence.dao.OrderDAO;
+import it.siw.persistence.dao.SellDAO;
+import it.siw.persistence.dao.TicketDAO;
 import it.siw.persistence.dao.UserDAO;
 import it.siw.persistence.dao.WishlistDAO;
 
@@ -21,6 +23,8 @@ public abstract class DAOFactory {
 
     public abstract EventDAO getEventDAO();
 
+    public abstract TicketDAO getTicketDAO();
+
     public abstract EventCategoryDAO getEventCategoryDAO();
 
     public abstract UserDAO getUserDAO();
@@ -28,5 +32,7 @@ public abstract class DAOFactory {
     public abstract WishlistDAO getWishlistDAO();
 
     public abstract OrderDAO getOrderDAO();
+
+    public abstract SellDAO getSellDAO();
 
 }

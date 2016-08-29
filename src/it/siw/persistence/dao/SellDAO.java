@@ -44,4 +44,8 @@ public interface SellDAO {
 
     public Map<Integer, Sell> findByGift(Gift g, Integer offset, Integer limit);
 
+    public Map<Integer, Sell> findByEvent(int id);
+
+    public Integer reserveById(int user_id, int ticket_id);
+
 }

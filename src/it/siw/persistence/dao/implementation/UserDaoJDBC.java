@@ -169,7 +169,7 @@ public class UserDaoJDBC implements UserDAO {
 		}
 		Sell sell = new Sell();
 		sell.setId(result.getInt("S.idSell"));
-		sell.setPrice(result.getLong("S.Price"));
+		sell.setPrice(result.getFloat("S.Price"));
 		order.getSells().put(sell.getId(), sell);
 		if (result.getInt("G.idGift") != 0) {
 		    Gift gift = new Gift();
@@ -192,8 +192,8 @@ public class UserDaoJDBC implements UserDAO {
 		event.setId(result.getInt("E.idEvent"));
 		event.setName(result.getString("E.Name"));
 		event.setImage(result.getString("E.Image"));
-		long time = result.getDate("EventDate").getTime();
-		event.setDate(new Date(time));
+
+		event.setDate(result.getDate("EventDate").toLocalDate());
 		ticket.setEvent(event);
 	    }
 	} catch (SQLException e) {
@@ -275,7 +275,7 @@ public class UserDaoJDBC implements UserDAO {
 		user.getSells().put(sell.getId(), sell);
 		long time = result.getDate("Date").getTime();
 		sell.setDate(new Date(time));
-		sell.setPrice(result.getLong("Price"));
+		sell.setPrice(result.getFloat("Price"));
 		Ticket ticket = new Ticket();
 		sell.setTicket(ticket);
 		ticket.setId(result.getInt("idTicket"));
