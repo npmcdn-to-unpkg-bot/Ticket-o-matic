@@ -25,9 +25,9 @@ public class AccountService {
 	    result.addProperty("result", "FAIL");
 	    destination = source;
 	    if (dao.findByUsername(destination.getUsername()) == null) {
-		result.addProperty("reason", "Username already exists, try agan with a new one!");
+		result.addProperty("reason", "Username already exists, try again with a new one!");
 	    } else if (dao.findByEmail(destination.getEmail()) == null) {
-		result.addProperty("reason", "Email already exists, try agan with a different one");
+		result.addProperty("reason", "Email already exists, try again with a different one");
 	    } else {
 		result.addProperty("reason", "Sorry, something went wrong, try again within few minutes");
 	    }
@@ -48,7 +48,7 @@ public class AccountService {
 	    return user;
 	}
 	result.addProperty("result", "FAIL");
-	result.addProperty("message", "Sorry, your username/password doesn't exists in our database !");
+	result.addProperty("reason", "Sorry, your username/password doesn't exists in our database !");
 	return null;
     }
 

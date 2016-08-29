@@ -1,6 +1,6 @@
 package it.siw.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Map;
 
 public class Event {
@@ -10,7 +10,7 @@ public class Event {
     private String location;
     private String image;
     private String description;
-    private Date date;
+    private LocalDate date;
     private EventCategory category;
     private User organizer;
     private Boolean suspended;
@@ -61,11 +61,11 @@ public class Event {
 	this.description = description;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
 	return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
 	this.date = date;
     }
 

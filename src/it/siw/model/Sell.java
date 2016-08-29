@@ -70,4 +70,5 @@ public class Sell {
     public void setGift(Gift gift) {
 	this.gift = gift;
     }
+
 }

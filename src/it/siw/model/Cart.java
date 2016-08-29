@@ -1,18 +1,19 @@
 package it.siw.model;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Cart {
 
     private User user;
-    private Map<Integer, Ticket> tickets;
-    private Long total;
+    private Map<Integer, Sell> tickets;
+    private float total;
 
     public Cart() {
 	user = null;
-	tickets = new HashMap<Integer, Ticket>();
-	total = 0L;
+	tickets = new HashMap<Integer, Sell>();
+	total = 0;
     }
 
     public User getUser() {
@@ -23,20 +24,23 @@ public class Cart {
 	this.user = user;
     }
 
-    public Map<Integer, Ticket> getTickets() {
+    public Map<Integer, Sell> getTickets() {
 	return tickets;
     }
 
-    public void setTickets(Map<Integer, Ticket> tickets) {
+    public void setTickets(Map<Integer, Sell> tickets) {
+
 	this.tickets = tickets;
     }
 
-    public Long getTotal() {
+    public float getTotal() {
 	return total;
     }
 
-    public void setTotal(Long total) {
-	this.total = total;
+    public void setTotal(float f) {
+	BigDecimal bc = new BigDecimal(f).setScale(2, BigDecimal.ROUND_HALF_UP);
+	f = bc.floatValue();
+	this.total = f;
     }
 
 }

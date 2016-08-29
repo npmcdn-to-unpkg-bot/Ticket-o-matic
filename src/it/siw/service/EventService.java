@@ -2,16 +2,13 @@ package it.siw.service;
 
 import java.util.Map;
 
-import javax.annotation.sql.DataSourceDefinition;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.zaxxer.hikari.HikariDataSource;
 
 import it.siw.model.Event;
+import it.siw.model.Sell;
 import it.siw.persistence.DAOFactory;
 import it.siw.persistence.dao.EventDAO;
-import it.siw.persistence.dao.implementation.EventDaoJDBC;
+import it.siw.persistence.dao.SellDAO;
 
 public class EventService {
     Gson gson;
@@ -24,29 +21,36 @@ public class EventService {
 	event = gson.fromJson(json, Event.class);
     }
 
-    public boolean createEvent() 
-    {
+    public EventService() {
+
+    }
+
+    public boolean createEvent() {
 	// create the dao that save event on the db
-    	EventDAO eventDAO = DAOFactory.getDaoFactory(DAOFactory.POSTGRES).getEventDAO();
-    	eventDAO.create(event);
-    	return true;
+	EventDAO eventDAO = DAOFactory.getDaoFactory(DAOFactory.POSTGRES).getEventDAO();
+	eventDAO.create(event);
+	return true;
     }
-    public void updateEvent(String data)
-    {
-    	DAOFactory factory= DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
-    	EventDAO eventDAO =factory.getEventDAO();
-    	Gson gson= new Gson();
-    	Event event=gson.fromJson(data, Event.class);
-    	eventDAO.update(event);
+
+    public void updateEvent(String data) {
+	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	EventDAO eventDAO = factory.getEventDAO();
+	Gson gson = new Gson();
+	Event event = gson.fromJson(data, Event.class);
+	eventDAO.update(event);
     }
-    public Map<Integer, Event> showEvent(String data)
-    {
-    	
-    	DAOFactory factory= DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
-    	EventDAO eventDAO =factory.getEventDAO();
-    	return eventDAO.findByName(data);
-    	
-    	
+
+    public Event getEvent(int id) {
+	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	EventDAO eventdao = factory.getEventDAO();
+	Event event = eventdao.findById(id);
+	return event;
+    }
+
+    public Map<Integer, Sell> getTicketAvaible(int eventid) {
+	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	SellDAO selldao = factory.getSellDAO();
+	return selldao.findByEvent(eventid);
     }
 
 }

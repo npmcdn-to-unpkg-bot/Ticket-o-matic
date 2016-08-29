@@ -4,7 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import it.siw.model.Cart;
-import it.siw.model.Ticket;
+import it.siw.model.Sell;
+import it.siw.model.User;
 
 public class CartService {
 
@@ -13,52 +14,55 @@ public class CartService {
     }
 
     public void addItem(String json, Cart cart, JsonObject result) {
-	if (json == null) {
-	    return;
-	}
 	Gson gson = new Gson();
-	Ticket item = gson.fromJson(json, Ticket.class);
-	if (cart.getTickets().put(item.getId(), item) != null) {
-	    result.addProperty("result", "SUCCESS");
-	    result.addProperty("message", "Successfully added " + item.getEvent().getName() + " ticket to the cart !");
-	} else {
-	    result.addProperty("result", "FAIL");
-	    result.addProperty("reason", "Something went wrong !");
-	}
+	Sell item = new Sell();
+	item = gson.fromJson(json, Sell.class);
+	cart.getTickets().put(item.getId(), item);
+	cart.setTotal(cart.getTotal() + item.getPrice());
+	result.addProperty("result", "SUCCESS");
+	result.addProperty("message", item.getTicket().getEvent().getName() + " ticket added to the cart !");
     }
 
     public void removeItem(String json, Cart cart, JsonObject result) {
 	Gson gson = new Gson();
-	Ticket item = gson.fromJson(json, Ticket.class);
-	if (cart.getTickets().remove(item.getId()) != null) {
+	Sell item = gson.fromJson(json, Sell.class);
+	if ((item = cart.getTickets().remove(item.getId())) != null) {
+	    cart.setTotal(cart.getTotal() - item.getPrice());
 	    result.addProperty("result", "SUCCESS");
 	    result.addProperty("message",
-		    "Successfully removed " + item.getEvent().getName() + " ticket from the cart !");
+		    "Successfully removed " + item.getTicket().getEvent().getName() + " ticket from the cart !");
 	} else {
 	    result.addProperty("result", "FAIL");
 	    result.addProperty("reason", "Something went wrong !");
 	}
     }
 
-    public void buy(Cart cart, JsonObject result) {
-	if (!cart.getTickets().isEmpty()) {
-	    // TODO THE ORDER PLACEMENT CODE HERE !!
-	    result.addProperty("result", "SUCCESS");
-	    result.addProperty("message", " Congratulations, your order has successfully been registered !");
+    public void buy(Cart cart, User user, JsonObject result) {
+	if (user != null) {
+	    if (!cart.getTickets().isEmpty()) {
+		// TODO THE ORDER PLACEMENT CODE HERE !!
+		result.addProperty("result", "SUCCESS");
+		result.addProperty("message", " Congratulations, your order has successfully been registered !");
+	    } else {
+
+	    }
 	} else {
+	    result.addProperty("callback", "SIGNIN");
 	    result.addProperty("result", "FAIL");
-	    result.addProperty("reason", "Your cart is empty, add something to buy !");
+	    result.addProperty("reason", "Can't checkout until loggedin, sign in now");
 	}
+
     }
 
     public void clear(Cart cart, JsonObject result) {
 	if (!cart.getTickets().isEmpty()) {
 	    cart.getTickets().clear();
 	    result.addProperty("result", "SUCCESS");
-	    result.addProperty("message", " Cart cleared !");
+	    result.addProperty("message", " Cart cleared ! ");
 	} else {
 	    result.addProperty("result", "FAIL");
 	    result.addProperty("reason", " Your cart is empty !");
 	}
+
     }
 }
