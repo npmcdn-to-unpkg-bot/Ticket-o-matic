@@ -152,7 +152,6 @@ $("#inner-login-form").submit(function(e) {
 		dataType : "JSON",
 		data : JSON.stringify(frm)
 	}).done(function(data) {
-		console.log(data);
 		operation_alert(data, function() {
 			window.location.reload();
 		});
@@ -160,4 +159,93 @@ $("#inner-login-form").submit(function(e) {
 	}).fail(function(data, status, err) {
 		alert("error: " + data + " status: " + status + " err: " + err);
 	});
+});
+
+/*
+ *  ADD TICKET
+ */
+$("#tickets").on('click',"button",function(e){
+	var id = parseInt($(this).attr("data-target"),10);
+	var section = $(this).parent().parent().find("[data-name='section']").text().trim();
+	var price = $(this).parent().parent().find("[data-name='price'] strong").text();
+	price = price.substring(0, price.length - 1).trim();
+	var name= $("[data-name='name']").text().trim();
+	var date= $("[data-name='date']").text().trim();
+	var location=$("[data-name='location']").text().trim();
+	var jsonObj = {};
+	var eventjson = {};
+	eventjson.name = name;
+	eventjson.location = location;
+	var datejson = {};
+	datejson.year = date.substring(0,4);
+	datejson.month = date.substring(5,7);
+	datejson.day = date.substring(8,10);
+	eventjson.date = datejson;
+	var categoryjson = {};
+	categoryjson.name = section;
+	var ticketjson = {};
+	ticketjson.event = eventjson;
+	ticketjson.category = categoryjson
+	jsonObj.id = id;
+	jsonObj.price = price;
+	jsonObj.ticket = ticketjson;
+	$.ajax({
+		url : "cart?action=add",
+		type : "POST",
+		dataType : "JSON",
+		data : JSON.stringify(jsonObj)
+	}).done(function(data) {
+		operation_alert(data, function() {
+			window.location.reload();
+		});
+	}).fail(function(data, status, err) {
+		alert("error: " + data + " status: " + status + " err: " + err);
+	});
+});
+/*
+ *  REMOVE TICKET
+ */
+$("#cart .ticket").on('click',"button",function(){
+	var id = parseInt($(this).attr("data-target"),10);
+	var name= $("[data-name='name'] strong").text().trim();
+	var jsonObj = {};
+	jsonObj.id = id;
+	$.ajax({
+		url : "cart?action=remove",
+		type : "POST",
+		dataType : "JSON",
+		data : JSON.stringify(jsonObj)
+	}).done(function(data) {
+		operation_alert(data, function() {
+			window.location.reload();
+		});
+	}).fail(function(data, status, err) {
+		alert("error: " + data + " status: " + status + " err: " + err);
+	});
+});
+$("#cart .cart-action").on('click',"button",function(){
+	var action = $(this).attr("data-action");
+	$.ajax({
+		url : "cart?action="+action,
+		type : "GET",
+		dataType : "JSON"
+	}).done(function(data) {
+		if(data.callback === "SIGNIN") {
+			operation_alert(data, function() {
+				innerToggle("login", "#innerbar-popup", "form", "form");
+				$("#innerbar-popup #inner-cart-div").hide();
+			});
+		} else {
+			operation_alert(data, function() {
+				window.location.reload();
+			});
+		}
+		
+	}).fail(function(data, status, err) {
+		alert("error: " + data + " status: " + status + " err: " + err);
+	});
+});
+$("#empty-cart-btn").on('click',function(){
+	innerToggle("search", "#innerbar-popup", "form", "form");
+	$("#innerbar-popup #inner-cart-div").hide();
 });
