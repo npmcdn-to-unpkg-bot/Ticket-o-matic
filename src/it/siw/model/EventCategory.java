@@ -38,4 +38,12 @@ public class EventCategory {
     public void setAnchestor(EventCategory anchestor) {
 	this.anchestor = anchestor;
     }
+
+    public Map<Integer, EventCategory> getChildren() {
+	return children;
+    }
+
+    public void setChildren(Map<Integer, EventCategory> children) {
+	this.children = children;
+    }
 }

@@ -6,6 +6,7 @@ import it.siw.persistence.dao.EventCategoryDAO;
 import it.siw.persistence.dao.EventDAO;
 import it.siw.persistence.dao.OrderDAO;
 import it.siw.persistence.dao.SellDAO;
+import it.siw.persistence.dao.TicketCategoryDAO;
 import it.siw.persistence.dao.TicketDAO;
 import it.siw.persistence.dao.UserDAO;
 import it.siw.persistence.dao.WishlistDAO;
@@ -13,6 +14,7 @@ import it.siw.persistence.dao.implementation.EventCategoryDaoJDBC;
 import it.siw.persistence.dao.implementation.EventDaoJDBC;
 import it.siw.persistence.dao.implementation.OrderDAOJDBC;
 import it.siw.persistence.dao.implementation.SellDAOJDBC;
+import it.siw.persistence.dao.implementation.TicketCategoryDAOJDBC;
 import it.siw.persistence.dao.implementation.TicketDAOJDBC;
 import it.siw.persistence.dao.implementation.UserDaoJDBC;
 import it.siw.persistence.dao.implementation.WishlistDAOJDBC;
@@ -26,7 +28,7 @@ public class PostgresDAOFactory extends DAOFactory {
 
     private static PostgresDAOFactory postgres;
 
-    private static String DBURL = "jdbc:postgresql://127.0.0.1/tom";
+    private static String DBURL = "jdbc:postgresql://127.0.0.1/tom?ApplicationName=Ticket-o-Matic";
     private static String USERNAME = "postgres";
     private static String PASSWORD = "postgres";
 
@@ -46,11 +48,18 @@ public class PostgresDAOFactory extends DAOFactory {
 	    datasource.setJdbcUrl(DBURL);
 	    datasource.setUsername(USERNAME);
 	    datasource.setPassword(PASSWORD);
-	    datasource.setMaxLifetime(100L);
+	    datasource.setMaximumPoolSize(10);
+	    datasource.setIdleTimeout(600000);
+	    datasource.setConnectionTimeout(30000);
 	} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 	    System.err.println("PostgresDAOFactory.class: failed to load JDBC driver\n" + e);
 	    e.printStackTrace();
 	}
+    }
+
+    @Override
+    public void destroyDataSource() {
+	datasource.close();
     }
 
     @Override
@@ -86,5 +95,10 @@ public class PostgresDAOFactory extends DAOFactory {
     @Override
     public SellDAO getSellDAO() {
 	return new SellDAOJDBC(datasource);
+    }
+
+    @Override
+    public TicketCategoryDAO getTicketCategoryDAO() {
+	return new TicketCategoryDAOJDBC(datasource);
     }
 }

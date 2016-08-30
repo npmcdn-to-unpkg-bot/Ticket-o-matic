@@ -17,7 +17,7 @@ public class User {
 
     private Map<Integer, Order> orders;
     private Map<Integer, Gift> gifts;
-    private Map<Integer, Wishlist> whishlists;
+    private Map<Integer, Wishlist> wishlist;
     private Map<Integer, Review> reviews;
     private Map<Integer, Sell> sells;
 
@@ -29,6 +29,7 @@ public class User {
 	surname = "";
 	coins = 0L;
 	orders = new HashMap<>();
+	wishlist = new HashMap<>();
 	type = Type.Customer;
 
     }
@@ -114,11 +115,11 @@ public class User {
     }
 
     public Map<Integer, Wishlist> getWhishlists() {
-	return whishlists;
+	return wishlist;
     }
 
     public void setWhishlists(Map<Integer, Wishlist> whishlists) {
-	this.whishlists = whishlists;
+	this.wishlist = whishlists;
     }
 
     public Map<Integer, Review> getReviews() {

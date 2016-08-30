@@ -17,4 +17,6 @@ public interface EventCategoryDAO {
     public boolean update(EventCategory modelobject);
 
     public boolean delete(EventCategory modelobject);
+
+    public Map<Integer, EventCategory> findAll();
 }

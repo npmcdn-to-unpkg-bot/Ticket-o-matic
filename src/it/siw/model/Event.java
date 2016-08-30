@@ -117,4 +117,12 @@ public class Event {
 	this.guests = guests;
     }
 
+    @Override
+    public String toString() {
+	return "Event [id=" + id + ", name=" + name + ", location=" + location + ", image=" + image + ", description="
+		+ description + ", date=" + date + ", category=" + category + ", organizer=" + organizer
+		+ ", suspended=" + suspended + ", ticket=" + ticket + ", reviews=" + reviews + ", guests=" + guests
+		+ "]";
+    }
+
 }

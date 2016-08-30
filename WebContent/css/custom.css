@@ -7,7 +7,7 @@ body {
 }
 @media screen and (max-width:767px) {
     body {
-      /* need test - otherwise set to auto */
+        /* need test - otherwise set to auto */
         height: 100%;
     }
 }
@@ -42,12 +42,12 @@ body {
     padding-left: 5px;
     padding-right: 5px;
 }
-
-.inner-cart .coins{
-  margin-left: -20px;
-  padding-left: 40px;
-  display: inline-block;
+.inner-cart .coins {
+    margin-left: -20px;
+    padding-left: 40px;
+    display: inline-block;
 }
+
 /*
 * BUTTON - bugfix
 */
@@ -71,13 +71,14 @@ body {
 .back-to-top-parent {
     width: 100%;
     position: relative;
-
 }
+
 /*
 * CONTENT
 */
+
 .content {
-  position: relative;
+    position: relative;
     min-height: 100%;
     margin-bottom: -81px;
 }
@@ -88,71 +89,98 @@ body {
     height: 117px;
 }
 .content-float {
-  z-index: -1;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  margin-left: -15px;
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    margin-left: -15px;
 }
+
 /*
 * SIDEBAR
 */
+
 .sidebar {
-  padding-bottom: 40px;
+    padding-bottom: 40px;
 }
 .sidebar-float {
-  z-index: -1;
-  position: absolute;
-  height: 100%;
-  width: 33.33333333%;
-  margin-left: -15px;
+    z-index: -1;
+    position: absolute;
+    height: 100%;
+    width: 33.33333333%;
+    margin-left: -15px;
 }
+
 /*
 * ACCOUNT PAGE
 */
+
 .account-nav-list li {
     list-style: none;
 }
+
 /*
 * ITEMS BOX
 */
-.event .ticket-table{
-  border-collapse:separate;
-  border: 1px solid #E6D5B8;
-  border-radius: 10px;
+
+.event .ticket-table {
+    border-collapse: separate;
+    border: 1px solid #E6D5B8;
+    border-radius: 10px;
 }
-.item-box{
-  /*border-radius: 25px;*/
-  background-color: white;
-  /*padding: 15px;
+.item-box {
+    /*border-radius: 25px;*/
+    background-color: white;
+    /*padding: 15px;
   margin: 5px;*/
 }
-.table , .table tr, .table thead,.table tbody {
-  border-radius: 10px;
+.table, .table tr, .table thead, .table tbody {
+    border-radius: 10px;
+}
+.table> thead> tr> th, .table> thead> tr> td, .table> tbody> tr> th, .table> tbody> tr> td, .table> tfoot> tr> th, .table> tfoot> tr> td {
+    border-top: 1px solid #E6D5B8;
+}
+.table> thead> tr> th {
+    border-bottom: 2px solid #E6D5B8;
 }
 
-.table > thead > tr > th,
-.table > thead > tr > td,
-.table > tbody > tr > th,
-.table > tbody > tr > td,
-.table > tfoot > tr > th,
-.table > tfoot > tr > td {
-  border-top: 1px solid #E6D5B8; }
-.table > thead > tr > th {
-  border-bottom: 2px solid #E6D5B8; }
-  /*
+/*
   * CART
   */
-  .cart-action{
+
+.cart-action {
     padding-top: 60px;
-  }
-  .cart-action > div[class^=col-] {
+}
+.cart-action> div[class^=col-] {
     padding-top: 5px;
     padding-bottom: 5px;
-  }
+}
+
+/*
+* EVENT LIST
+*/
+
+.events-list .row {
+    min-height: 80px;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 15px;
+}
+.events-list .row:nth-child(odd) {
+    background: #FF5722;
+}
+.events-list .row:nth-child(even) {
+    background: #F57C00;
+}
+
+.events-list img {
+    padding-top: 2.5px;
+}
+
 /*
 * FOOTER
 */
+
 footer {
     height: 81px;
     background-color: #F44336;

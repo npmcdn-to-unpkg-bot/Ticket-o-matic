@@ -47,4 +47,6 @@ public interface EventDAO {
     public void update(Event e);
 
     public void delete(Event e);
+
+    Map<Integer, Event> findByOrganizer(User u);
 }

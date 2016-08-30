@@ -60,7 +60,6 @@ public class AccountServlet extends HttpServlet {
 	    break;
 	case "signin":
 	    User user = AccountService.signIn(json, result);
-	    System.out.println(result.toString());
 	    if (user != null) {
 		HttpSession session = request.getSession();
 		user.setSession_id(session.getId());

@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.HashMap;
 import java.util.Map;
 
 import com.zaxxer.hikari.HikariDataSource;
@@ -114,6 +115,42 @@ public class EventCategoryDaoJDBC implements EventCategoryDAO {
 	}
 
 	return eventCategory;
+    }
+
+    @Override
+    public Map<Integer, EventCategory> findAll() {
+	Map<Integer, EventCategory> category = new HashMap<>();
+	Connection connection = null;
+	String query = null;
+	EventCategory eventCategory = null;
+	PreparedStatement statement = null;
+	ResultSet result = null;
+	try {
+	    connection = datasource.getConnection();
+	    query = "Select EC.idEventCategory,EC.Name,EC.anchestorcategory ";
+	    query += "FROM  EventCategory as EC";
+	    statement = connection.prepareStatement(query);
+	    result = statement.executeQuery();
+	    while (result.next()) {
+		eventCategory = new EventCategory();
+		eventCategory.setId(result.getInt("idEventCategory"));
+		eventCategory.setName(result.getString("Name"));
+		category.put(eventCategory.getId(), eventCategory);
+		if (result.getInt("anchestorcategory") == 0) {
+		    eventCategory.setAnchestor(null);
+		} else {
+		    eventCategory.setAnchestor(category.get(result.getInt("anchestorcategory")));
+		}
+	    }
+
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	} finally {
+	    DAOUtility.close(connection);
+	    DAOUtility.close(statement);
+	    DAOUtility.close(result);
+	}
+	return category;
     }
 
     @Override

@@ -3,33 +3,37 @@ package it.siw.service;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 import it.siw.model.Event;
+import it.siw.model.EventCategory;
 import it.siw.model.Sell;
+import it.siw.model.TicketCategory;
+import it.siw.model.User;
 import it.siw.persistence.DAOFactory;
+import it.siw.persistence.dao.EventCategoryDAO;
 import it.siw.persistence.dao.EventDAO;
 import it.siw.persistence.dao.SellDAO;
+import it.siw.persistence.dao.TicketCategoryDAO;
 
 public class EventService {
-    Gson gson;
-    String json;
-    Event event;
-
-    public EventService(String json) {
-	this.json = json;
-	this.gson = new Gson();
-	event = gson.fromJson(json, Event.class);
-    }
 
     public EventService() {
 
     }
 
-    public boolean createEvent() {
-	// create the dao that save event on the db
-	EventDAO eventDAO = DAOFactory.getDaoFactory(DAOFactory.POSTGRES).getEventDAO();
-	eventDAO.create(event);
-	return true;
+    public void createEvent(String json, User user, JsonObject result) {
+	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	EventDAO eventDAO = factory.getEventDAO();
+	Event event = new Gson().fromJson(json, Event.class);
+	event.setOrganizer(user);
+	if (eventDAO.create(event)) {
+	    result.addProperty("result", "SUCCESS");
+	    result.addProperty("message", "Great ! The event has been created !");
+	} else {
+	    result.addProperty("result", "FAIL");
+	    result.addProperty("reason", "Something weird happened, try again !");
+	}
     }
 
     public void updateEvent(String data) {
@@ -51,6 +55,20 @@ public class EventService {
 	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
 	SellDAO selldao = factory.getSellDAO();
 	return selldao.findByEvent(eventid);
+    }
+
+    public Map<Integer, EventCategory> getEventsCategory() {
+	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	EventCategoryDAO catdao = factory.getEventCategoryDAO();
+	return catdao.findAll();
+
+    }
+
+    public Map<Integer, TicketCategory> getTicketsCategory() {
+	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	TicketCategoryDAO catdao = factory.getTicketCategoryDAO();
+	return catdao.findAll();
+
     }
 
 }

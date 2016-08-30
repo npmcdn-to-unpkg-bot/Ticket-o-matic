@@ -7,6 +7,7 @@ public class Ticket {
     private String row;
     private String seat;
     private TicketCategory category;
+    private int quantity;
     private Event event;
     private boolean empty;
 
@@ -60,6 +61,14 @@ public class Ticket {
 
     public void setCategory(TicketCategory category) {
 	this.category = category;
+    }
+
+    public int getQuantity() {
+	return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+	this.quantity = quantity;
     }
 
     public Event getEvent() {

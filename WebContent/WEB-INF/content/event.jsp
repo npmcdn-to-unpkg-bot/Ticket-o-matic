@@ -27,13 +27,13 @@
                     <div id="event-organizer" class="col-xs-12">
                         <h5><span class="glyphicon glyphicon-user"></span> Organizer:</h5>
                         <p>
-                            thoniorf
+                            ${event.organizer.username }
                         </p>
                     </div>
                     <div id="event-category" class="col-xs-12">
                         <h5><span class="glyphicon glyphicon-list"></span> Category:</h5>
                         <p>
-                            Category
+                            ${event.category.name }
                         </p>
                     </div>
                     <div id="event-description" class="col-xs-12">
@@ -49,14 +49,16 @@
                             ${event.location }
                         </p>
                     </div>
+                    <c:if test="${!empty user }">
                     <div class="col-xs-12">
                         <h5><span class="glyphicon glyphicon-star"></span> Add to Wishlist:</h5>
                         <p>
                             <form id="add-eventwishlist-form" class="form-inline">
                                 <div class="input-group">
                                 <select class="form-control" name="id">
-                                    <option value="1">Lista dei Desideri</option>
-                                    <option value="8">Nuovi Eventi</option>
+                                <c:forEach items="${wishlists}" var="wishlist">
+                                    <option value="${wishlist.key }">${wishlist.value.title}</option>
+                                    </c:forEach>
                                 </select>
                                   <span class="input-group-btn">
                                   <button type="submit" class="btn btn-default">
@@ -68,6 +70,7 @@
                             </form>
                         </p>
                     </div>
+                    </c:if>
                 </div>
             </div>
         </div>

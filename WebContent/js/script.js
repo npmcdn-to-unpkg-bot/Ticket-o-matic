@@ -160,7 +160,53 @@ $("#inner-login-form").submit(function(e) {
 		alert("error: " + data + " status: " + status + " err: " + err);
 	});
 });
-
+/*
+ * SAVE EVENT
+ */
+$("#event-details-form").on('submit',function(e){
+	e.preventDefault();
+	var frm = {};
+	frm.name = $(this).find("input[name='title']").val();
+	frm.location = $(this).find("input[name='location']").val();
+	frm.description = $(this).find("textarea[name='description']").val();
+	frm.image = $(this).find("input[name='image']").val();
+	// date
+	frm.date = {};
+	frm.date.year= $(this).find("input[name='date']").val().substring(0,4);
+	frm.date.month = $(this).find("input[name='date']").val().substring(5,7);
+	frm.date.day = $(this).find("input[name='date']").val().substring(8,10);
+	// category
+	frm.category = {};
+	frm.category.id = $(this).find("select[name='category']").val();
+	var tickets = {};
+	var id = 0;
+	$(".ticket").each(function(index,val){
+		var number = parseInt($(this).find("input[name='ticket-number']").val(),10);
+		var price = $(this).find("input[name='ticket-price']").val();
+		var category = {};
+		category.id = $(this).find("select[name='ticket-category']").val();
+		for(var i = 0; i < number ; i++){
+			var ticket = {};
+			ticket.price = price;
+			ticket.category = category;
+			tickets[id]=ticket;
+			id++;
+		}		
+	});
+	frm.ticket = tickets;
+	$.ajax({
+		url : "event?action=create",
+		type : "POST",
+		dataType : "JSON",
+		data : JSON.stringify(frm)
+	}).done(function(data) {
+		operation_alert(data, function() {
+			//window.location.href = "home";
+		});
+	}).fail(function(data, status, err) {
+		alert("error: " + data + " status: " + status + " err: " + err);
+	});
+});
 /*
  *  ADD TICKET
  */

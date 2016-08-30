@@ -15,6 +15,7 @@ import it.siw.model.Sell;
 import it.siw.model.User;
 import it.siw.model.Wishlist;
 import it.siw.persistence.DAOFactory;
+import it.siw.persistence.dao.EventDAO;
 import it.siw.persistence.dao.OrderDAO;
 import it.siw.persistence.dao.UserDAO;
 import it.siw.persistence.dao.WishlistDAO;
@@ -33,10 +34,6 @@ import it.siw.persistence.dao.WishlistDAO;
  */
 public class UserService {
 
-    public UserService() {
-	// TODO Auto-generated constructor stub
-    }
-
     public User updateUser(String json, Integer id, JsonObject result) {
 	DAOFactory postgres = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
 	UserDAO userdao = postgres.getUserDAO();
@@ -53,6 +50,20 @@ public class UserService {
 	    return null;
 	}
 
+    }
+
+    public Map<Integer, Event> showOrganizerEvents(User u, Integer offeset, Integer Limit, JsonObject result) {
+	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	EventDAO eventdao = factory.getEventDAO();
+	Map<Integer, Event> events = eventdao.findByOrganizer(u);
+	if (!events.isEmpty()) {
+	    result.addProperty("result", "SUCCESS");
+	    result.addProperty("message", "The Wishlist has been added !");
+	} else {
+	    result.addProperty("result", "FAIL");
+	    result.addProperty("reason", "Something weird happened, please try again later  !");
+	}
+	return events;
     }
 
     public void addWishlist(String json, User user, JsonObject result) {
@@ -126,7 +137,6 @@ public class UserService {
     }
 
     public void addEventWishlist(String json, JsonObject result) {
-	System.out.println(json);
 	DAOFactory postgres = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
 	WishlistDAO wishlistdao = postgres.getWishlistDAO();
 	Gson gson = new Gson();

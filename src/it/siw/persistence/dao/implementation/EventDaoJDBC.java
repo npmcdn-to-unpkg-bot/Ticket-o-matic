@@ -26,30 +26,53 @@ public class EventDaoJDBC implements EventDAO {
 
     @Override
     public boolean create(Event modelObject) {
+	int operations = 3;
 	Connection connection = null;
-	String query = null;
-	PreparedStatement statement = null;
+	String[] query = new String[operations];
+	query[0] = "insert into Event(Name,Location,Date,Description,Category_id,Organizer_id,Image) values(?,?,?,?,?,?,?) RETURNING idevent";
+	query[1] = "insert into ticket(price,ticketcategory_id,event_id) VALUES(?,?,?) RETURNING idticket";
+	query[2] = "insert into usersellticket(user_id,ticket_id,price) VALUES(?,?,?)";
+	PreparedStatement[] statement = new PreparedStatement[operations];
+	ResultSet[] result = new ResultSet[2];
 	try {
 	    connection = datasource.getConnection();
-	    query = "insert into Event(Name,Location,Date,Description,Suspended,Category_id,Organizer_id,Image) values(?,?,?,?,?,?,?,?)";
-	    statement = connection.prepareStatement(query);
-	    statement.setString(1, modelObject.getName());
-	    statement.setString(2, modelObject.getLocation());
-	    long time = modelObject.getDate().toEpochDay();
-	    statement.setDate(3, new java.sql.Date(time));
-	    statement.setString(4, modelObject.getDescription());
-	    statement.setBoolean(5, modelObject.getSuspended());
-	    statement.setInt(6, modelObject.getCategory().getId());
-	    statement.setInt(7, modelObject.getOrganizer().getId());
-	    statement.setString(8, modelObject.getImage());
-	    return (statement.executeUpdate() > 0) ? true : false;
+	    for (int i = 0; i < operations; i++) {
+		statement[i] = connection.prepareStatement(query[i]);
+	    }
+	    statement[0].setString(1, modelObject.getName());
+	    statement[0].setString(2, modelObject.getLocation());
+	    statement[0].setDate(3, java.sql.Date.valueOf(modelObject.getDate()));
+	    statement[0].setString(4, modelObject.getDescription());
+	    statement[0].setInt(5, modelObject.getCategory().getId());
+	    statement[0].setInt(6, modelObject.getOrganizer().getId());
+	    statement[0].setString(7, modelObject.getImage());
+	    result[0] = statement[0].executeQuery();
+	    if (result[0].next()) {
+		modelObject.setId(result[0].getInt(1));
+		for (Integer ticket_id : modelObject.getTicket().keySet()) {
+		    statement[1].setFloat(1, modelObject.getTicket().get(ticket_id).getPrice());
+		    statement[1].setInt(2, modelObject.getTicket().get(ticket_id).getCategory().getId());
+		    statement[1].setFloat(3, modelObject.getId());
+		    result[1] = statement[1].executeQuery();
+		    if (result[1].next()) {
+			statement[2].setInt(1, modelObject.getOrganizer().getId());
+			statement[2].setInt(2, result[1].getInt(1));
+			statement[2].setFloat(3, modelObject.getTicket().get(ticket_id).getPrice());
+			statement[2].executeUpdate();
+		    }
+		}
+	    }
 
 	} catch (SQLException e) {
 	    // TODO Auto-generated catch block
 	    e.printStackTrace();
 	} finally {
 	    DAOUtility.close(connection);
-	    DAOUtility.close(statement);
+	    for (int i = 0; i < operations; i++) {
+		DAOUtility.close(statement[i]);
+	    }
+	    DAOUtility.close(result[0]);
+	    DAOUtility.close(result[1]);
 	}
 	return false;
 
@@ -64,7 +87,8 @@ public class EventDaoJDBC implements EventDAO {
 	ResultSet result = null;
 	try {
 	    connection = datasource.getConnection();
-	    query = "Select * from event where idevent = ?";
+	    query = "Select e.*,u.username,ecat.name as category from event as e join users as u on e.organizer_id = u.iduser "
+		    + "join eventcategory as ecat on e.category_id = ecat.ideventcategory " + "where idevent = ?";
 	    statement = connection.prepareStatement(query);
 	    statement.setInt(1, id);
 	    result = statement.executeQuery();
@@ -75,6 +99,12 @@ public class EventDaoJDBC implements EventDAO {
 		event.setDescription(result.getString("description"));
 		event.setDate(result.getDate("date").toLocalDate());
 		event.setLocation(result.getString("location"));
+		User user = new User();
+		user.setUsername(result.getString("username"));
+		event.setOrganizer(user);
+		EventCategory category = new EventCategory();
+		category.setName(result.getString("category"));
+		event.setCategory(category);
 	    }
 
 	} catch (SQLException e) {
@@ -373,6 +403,41 @@ public class EventDaoJDBC implements EventDAO {
 	    DAOUtility.close(result);
 	}
 	return events;
+    }
+
+    @Override
+    public Map<Integer, Event> findByOrganizer(User u) {
+	Map<Integer, Event> events = new HashMap<>();
+	Connection connection = null;
+	String query = null;
+	PreparedStatement statement = null;
+	ResultSet result = null;
+	try {
+	    connection = datasource.getConnection();
+	    query = "SELECT e.idevent,e.name,e.date,e.location,e.image,e.suspended FROM event as e WHERE e.organizer_id = ?";
+	    statement = connection.prepareStatement(query);
+	    statement.setInt(1, u.getId());
+	    result = statement.executeQuery();
+
+	    while (result.next()) {
+		Event event = new Event();
+		event.setId(result.getInt("idevent"));
+		event.setName(result.getString("name"));
+		event.setDate(result.getDate("date").toLocalDate());
+		event.setLocation(result.getString("location"));
+		event.setImage(result.getString("image"));
+		event.setSuspended(result.getBoolean("suspended"));
+		events.put(event.getId(), event);
+	    }
+	} catch (SQLException e) {
+	    e.printStackTrace();
+	} finally {
+	    DAOUtility.close(connection);
+	    DAOUtility.close(statement);
+	    DAOUtility.close(result);
+	}
+	return events;
+
     }
 
     @Override
