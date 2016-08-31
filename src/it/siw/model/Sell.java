@@ -12,7 +12,7 @@ public class Sell {
     private Gift gift;
 
     public Sell() {
-	// TODO Auto-generated constructor stub
+	this.id = 0;
     }
 
     public int getId() {

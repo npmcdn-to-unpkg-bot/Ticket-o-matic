@@ -37,7 +37,7 @@ public class OrderDAOJDBC implements OrderDAO {
 	ResultSet result = null;
 	try {
 	    connection = dataSource.getConnection();
-	    query = "SELECT ticket_id FROM order_checkout(?,?,?,?)";
+	    query = "SELECT ticket_id FROM order_checkout(?,?,?,?) as ticket_id";
 	    statement = connection.prepareStatement(query);
 	    statement.setInt(1, modelObject.getUser().getId());
 	    statement.setString(2, modelObject.getUser().getSession_id());

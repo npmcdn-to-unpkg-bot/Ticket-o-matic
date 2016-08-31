@@ -11,6 +11,7 @@ import it.siw.model.Sell;
 import it.siw.model.User;
 import it.siw.persistence.DAOFactory;
 import it.siw.persistence.dao.OrderDAO;
+import it.siw.persistence.dao.SellDAO;
 
 public class CartService {
 
@@ -19,18 +20,31 @@ public class CartService {
     }
 
     public void addItem(String json, Cart cart, JsonObject result) {
+	DAOFactory postgres = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	SellDAO selldao = postgres.getSellDAO();
 	Gson gson = new Gson();
 	Sell item = new Sell();
 	item = gson.fromJson(json, Sell.class);
-	cart.getTickets().put(item.getId(), item);
-	cart.setTotal(cart.getTotal() + item.getPrice());
-	result.addProperty("result", "SUCCESS");
-	result.addProperty("message", item.getTicket().getEvent().getName() + " ticket added to the cart !");
+	item = selldao.reserveSell(cart.getUser(), item);
+	if (item.getId() != 0) {
+	    cart.getTickets().put(item.getId(), item);
+	    cart.setTotal(cart.getTotal() + item.getPrice());
+	    result.addProperty("result", "SUCCESS");
+	    result.addProperty("message", item.getTicket().getEvent().getName() + " ticket added to the cart !");
+	} else {
+	    result.addProperty("result", "FAIL");
+	    result.addProperty("reason", "Something went wrong try again!");
+
+	}
     }
 
     public void removeItem(String json, Cart cart, JsonObject result) {
+	DAOFactory postgres = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	SellDAO selldao = postgres.getSellDAO();
+
 	Gson gson = new Gson();
 	Sell item = gson.fromJson(json, Sell.class);
+	selldao.removeReservation(item);
 	if ((item = cart.getTickets().remove(item.getId())) != null) {
 	    cart.setTotal(cart.getTotal() - item.getPrice());
 	    result.addProperty("result", "SUCCESS");

@@ -24,7 +24,7 @@
 								<div class="col-xs-12">
 									<div class="ticket row">
 										<div class="col-sm-3">
-											<a href="#" class="thumbnail"> <img src="" alt="">
+											<a href="#" class="thumbnail"> <img src="${entry.value.ticket.event.image}" alt="${entry.value.ticket.event.name } image">
 											</a>
 										</div>
 										<div class="col-sm-5">

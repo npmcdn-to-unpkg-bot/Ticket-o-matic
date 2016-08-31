@@ -12,7 +12,7 @@ public interface EventDAO {
 
     public void delete(Event e);
 
-    public Map<Integer, Event> findByCategory(String category);
+    public Map<Integer, Event> findByCategory(int cat, int limit, int offset);
 
     public Map<Integer, Event> findByDate(LocalDate date, int limit, int offset);
 

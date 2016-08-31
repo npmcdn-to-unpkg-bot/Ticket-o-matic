@@ -205,4 +205,10 @@ public class UserService {
 	return result;
     }
 
+    public void updateUserCoins(User user) {
+	DAOFactory postgres = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	UserDAO userdao = postgres.getUserDAO();
+	user.setCoins(userdao.findById(user.getId()).getCoins());
+    }
+
 }

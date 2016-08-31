@@ -56,4 +56,12 @@ public class SearchService {
 
     }
 
+    public Map<Integer, Event> getByCat(int cat, int limit, int offset) {
+	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	EventDAO eventdao = factory.getEventDAO();
+	Map<Integer, Event> events;
+	events = eventdao.findByCategory(cat, limit, offset);
+	return events;
+    }
+
 }

@@ -44,6 +44,9 @@ public class CartController extends HttpServlet {
 	if (cart == null) {
 	    cart = new Cart();
 	    session.setAttribute("cart", cart);
+	    User tmp = new User();
+	    tmp.setSession_id(session.getId());
+	    cart.setUser(tmp);
 	}
 	User user = (User) session.getAttribute("user");
 	BufferedReader br = new BufferedReader(request.getReader());

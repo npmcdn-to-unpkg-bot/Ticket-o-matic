@@ -120,6 +120,42 @@
 						</button>
 					</div>
 				</div>
+				<div id="guest-group">
+					<div class="form-group">
+						<label class="col-xs-12 col-sm-3 col-sm-offset-4">Events
+							Guests</label>
+					</div>
+					<div class="guest">
+						<div class="form-group">
+							<label class="col-xs-12 col-sm-2 control-label">Guest:</label>
+							<div class=" col-xs-12 col-sm-6">
+								<input type="text" class="form-control" name="guest-name"
+									placeholder="Guest name" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class=" col-xs-12 col-sm-6 col-sm-offset-2">
+								<input type="url" class="form-control" name="guest-image"
+									placeholder="Guest image URL" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-xs-12 col-sm-6 col-sm-offset-2">
+								<button type="button" class="btn btn-danger btn-block" disabled>
+									<span class="glyphicon glyphicon-remove"></span> Remove
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-xs-12 col-sm-6 col-sm-offset-2">
+						<button id="add-guest" type="button"
+							class="btn btn-primary btn-block">
+							<span class="glyphicon glyphicon-plus"></span> Add Guest
+						</button>
+					</div>
+				</div>
 				<div class="form-group">
 					<div class="col-xs-8 col-sm-4 col-sm-offset-2">
 						<button type="submit" class="btn btn-success btn-block">Save</button>

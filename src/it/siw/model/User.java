@@ -13,7 +13,7 @@ public class User {
     private String name;
     private String surname;
     private Type type;
-    private Long coins;
+    private float coins;
 
     private Map<Integer, Order> orders;
     private Map<Integer, Gift> gifts;
@@ -90,11 +90,11 @@ public class User {
 	this.surname = surname;
     }
 
-    public Long getCoins() {
+    public float getCoins() {
 	return coins;
     }
 
-    public void setCoins(Long coins) {
+    public void setCoins(float coins) {
 	this.coins = coins;
     }
 

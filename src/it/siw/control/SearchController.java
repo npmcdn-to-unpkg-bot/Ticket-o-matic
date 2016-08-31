@@ -69,6 +69,11 @@ public class SearchController extends HttpServlet {
 	    events = new SearchService().getByLoc(loc, 10, 10);
 	    break;
 	}
+	case "bycat": {
+	    int cat = Integer.parseInt(request.getParameter("search"));
+	    events = new SearchService().getByCat(cat, 10, 0);
+	    break;
+	}
 	default:
 	    break;
 	}

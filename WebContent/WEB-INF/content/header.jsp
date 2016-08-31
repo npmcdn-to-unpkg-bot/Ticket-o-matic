@@ -21,9 +21,25 @@
 						data-toggle="dropdown" role="button" aria-haspopup="true"
 						aria-expanded="false">Category<span class="caret"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">Concert</a></li>
-							<li><a href="#">Cinema</a></li>
-							<li><a href="#">Festival</a></li>
+							<li><a class="trigger right-caret">Concert</a>
+								<ul class="dropdown-menu sub-menu">
+									<li><a href="search?filters=bycat&search=5">Rock & Pop</a></li>
+									<li><a href="search?filters=bycat&search=6">Hard Rock/Metal</a></li>
+									<li><a href="search?filters=bycat&search=7">Jazz and Blues</a></li>
+									<li><a href="search?filters=bycat&search=8">World Music</a></li>
+								</ul></li>
+							<li><a class="trigger right-caret"href="#">Sport</a>
+								<ul class="dropdown-menu sub-menu">
+									<li><a href="search?filters=bycat&search=9">Tennis</a></li>
+									<li><a href="search?filters=bycat&search=10">Football</a></li>
+									<li><a href="search?filters=bycat&search=11">Motorsport</a></li>
+								</ul></li>
+							<li><a class="trigger right-caret"href="#">Theater</a>
+								<ul class="dropdown-menu sub-menu">
+									<li><a href="search?filters=bycat&search=12">Movie</a></li>
+									<li><a href="search?filters=bycat&search=13">Conferences and Speaking</a></li>
+									<li><a href="search?filters=bycat&search=14">Exhibitions</a></li>
+								</ul></li>
 						</ul></li>
 					<li class="navbar-action-group visible-xs"><a href="#"
 						aria-label="search"><span class="glyphicon glyphicon-search"></span>
@@ -80,8 +96,8 @@
 							<div class="form-group" id="search-group">
 								<div class="input-group">
 									<input type="search" class="form-control" aria-label="search"
-										name="search" placeholder="Search by Events Title">
-									<span class="input-group-btn">
+										name="search" placeholder="Search by Events Title"> <span
+										class="input-group-btn">
 										<button type="submit" class="btn btn-default">Search</button>
 									</span>
 								</div>
@@ -160,18 +176,23 @@
 				</form>
 				<div id="inner-cart-div" class="inner-cart row text-center">
 					<div class="col-xs-12">
-						<a href="home?action=cart"><button type="button"
-								class="btn btn-success">
-								<span class="glyphicon glyphicon-shopping-cart"></span> Your
-								cart
-							</button></a> <span class="coins"> Coins: <strong>0.00</strong>
-						</span>
+						<a href="home?action=cart" class="btn btn-success"> <span
+							class="glyphicon glyphicon-shopping-cart"></span> Your cart
+						</a>
+						<c:choose>
+							<c:when test="${!empty user }">
+								<span class="coins"> Coins: <strong>${user.coins}</strong></span>
+							</c:when>
+							<c:otherwise>
+								<span class="coins"> Coins: <strong>0.00</strong></span>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<div id="operation-alert" class="hidden alert" role="alert">
-	<p id="operation-alert-text">
-	</p></div>
+		<p id="operation-alert-text"></p>
+	</div>
 </header>

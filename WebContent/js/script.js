@@ -21,6 +21,24 @@
 	};
 })(jQuery);
 
+$(function(){
+	$(".dropdown-menu > li > a.trigger").on("click",function(e){
+		var current=$(this).next();
+		var grandparent=$(this).parent().parent();
+		if($(this).hasClass('left-caret')||$(this).hasClass('right-caret'))
+			$(this).toggleClass('right-caret left-caret');
+		grandparent.find('.left-caret').not(this).toggleClass('right-caret left-caret');
+		grandparent.find(".sub-menu:visible").not(current).hide();
+		current.toggle();
+		e.stopPropagation();
+	});
+	$(".dropdown-menu > li > a:not(.trigger)").on("click",function(){
+		var root=$(this).closest('.dropdown');
+		root.find('.left-caret').toggleClass('right-caret left-caret');
+		root.find('.sub-menu:visible').hide();
+	});
+});
+
 /*
  * Innerbar animations and handlers
  */
@@ -40,6 +58,13 @@ $(".navbar-action-group").on('click', "button,a", function() {
 		$("#innerbar-popup #inner-cart-div").hide();
 	} else if (target == "cart") {
 		innerToggle(target, "#innerbar-popup", "div", "form");
+		$.ajax({
+			url : "user?action=coins",
+			type : "POST",
+			dataType : "JSON",
+		}).done(function(data){
+			$(".coins strong").html(data.coins)
+		});
 	}
 });
 $("#innerbar-popup").on('focus', "input", function() {
@@ -133,11 +158,22 @@ $("#add-ticket").on('click', function() {
 	$(ticket).find("button").removeAttr("disabled");
 	$(ticket).appendTo($("#ticket-group")).hide().slideDown("fast");
 });
+$("#add-guest").on('click', function() {
+	var ticket = $(".guest").filter(":first").clone(true);
+	$(ticket).find("button").removeAttr("disabled");
+	$(ticket).appendTo($("#guest-group")).hide().slideDown("fast");
+});
 /*
  * REMOVE TICKET FORM EVENT
  */
 $("#create-event .ticket").on('click', "button", function() {
 	var ticket = $(this).closest(".ticket");
+	$(ticket).slideUp("fast", function() {
+		$(ticket).remove();
+	})
+});
+$("#create-event .guest").on('click', "button", function() {
+	var ticket = $(this).closest(".guest");
 	$(ticket).slideUp("fast", function() {
 		$(ticket).remove();
 	})
@@ -217,15 +253,23 @@ $("#event-details-form").on('submit',function(e){
 		}		
 	});
 	frm.ticket = tickets;
+	var guests = {};
+	$(".guest").each(function(index,val){
+		var name = $(this).find("input[name='guest-name']").val().trim();
+		var image = $(this).find("input[name='guest-image']").val().trim();
+		var guest = {};
+		guest.name = name;
+		guest.image = image;
+		guests[index] = guest;
+	});
+	frm.guests = guests;
 	$.ajax({
 		url : "event?action=create",
 		type : "POST",
 		dataType : "JSON",
 		data : JSON.stringify(frm)
 	}).done(function(data) {
-		operation_alert(data, function() {
-			//window.location.href = "home";
-		});
+		operation_alert(data, function() {});
 	}).fail(function(data, status, err) {
 		alert("error: " + data + " status: " + status + " err: " + err);
 	});
@@ -241,21 +285,24 @@ $("#tickets").on('click',"button",function(e){
 	var name= $("[data-name='name']").text().trim();
 	var date= $("[data-name='date']").text().trim();
 	var location=$("[data-name='location']").text().trim();
+	var image = $("[data-name='image']").attr("src").trim();
 	var jsonObj = {};
 	var eventjson = {};
+	eventjson.id = id;
 	eventjson.name = name;
 	eventjson.location = location;
+	eventjson.image = image;
 	var datejson = {};
 	datejson.year = date.substring(0,4);
 	datejson.month = date.substring(5,7);
 	datejson.day = date.substring(8,10);
 	eventjson.date = datejson;
 	var categoryjson = {};
+	categoryjson.id = parseInt($(this).parent().parent().find("[data-name='section']").attr("data-target"),10);
 	categoryjson.name = section;
 	var ticketjson = {};
 	ticketjson.event = eventjson;
 	ticketjson.category = categoryjson
-	jsonObj.id = id;
 	jsonObj.price = price;
 	jsonObj.ticket = ticketjson;
 	$.ajax({

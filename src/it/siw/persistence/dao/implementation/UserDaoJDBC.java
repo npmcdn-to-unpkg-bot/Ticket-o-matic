@@ -42,7 +42,7 @@ public class UserDaoJDBC implements UserDAO {
 	    statement.setString(4, modelObject.getName());
 	    statement.setString(5, modelObject.getSurname());
 	    statement.setString(6, modelObject.getType().name());
-	    statement.setLong(7, modelObject.getCoins());
+	    statement.setFloat(7, modelObject.getCoins());
 	    return (statement.executeUpdate() > 0) ? true : false;
 	} catch (SQLException e) {
 	    System.err.println("Error");
@@ -75,7 +75,7 @@ public class UserDaoJDBC implements UserDAO {
 		user.setName(result.getString("name"));
 		user.setSurname(result.getString("surname"));
 		user.setType(Type.valueOf(result.getString("usertype")));
-		user.setCoins(result.getLong("coins"));
+		user.setCoins(result.getFloat("coins"));
 	    }
 	} catch (SQLException e) {
 	    // TODO Auto-generated catch block

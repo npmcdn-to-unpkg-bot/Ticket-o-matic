@@ -40,7 +40,7 @@ public class UserController extends HttpServlet {
 
 	User user = (User) session.getAttribute("user");
 	if (user == null) {
-	    // TODO goto ERROR PAGE - you're not an user
+	    return;// TODO goto ERROR PAGE - you're not an user
 	}
 	switch (action) {
 	case "update": {
@@ -85,6 +85,11 @@ public class UserController extends HttpServlet {
 	    UserService service = new UserService();
 	    result = service.showOrderItems(json, result);
 	    break;
+	}
+	case "coins": {
+	    UserService service = new UserService();
+	    service.updateUserCoins(user);
+	    result.addProperty("coins", user.getCoins());
 	}
 	default:
 	    break;
