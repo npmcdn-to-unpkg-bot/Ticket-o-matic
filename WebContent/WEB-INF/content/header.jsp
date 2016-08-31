@@ -73,14 +73,14 @@
 	<div class="innerbar light-primary-color">
 		<div id="innerbar-popup" class="hidden">
 			<div class="container">
-				<form id="inner-search-form" class="" method="post">
+				<form id="inner-search-form" class="" action="search" method="get">
 					<!--<input type="date" class=" form-control" aria-label="search" id="searchbydate" name="search">-->
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="form-group" id="search-group">
 								<div class="input-group">
 									<input type="search" class="form-control" aria-label="search"
-										id="search" name="search" placeholder="Search by Events Title">
+										name="search" placeholder="Search by Events Title">
 									<span class="input-group-btn">
 										<button type="submit" class="btn btn-default">Search</button>
 									</span>
@@ -89,7 +89,7 @@
 							<div class="form-group hidden" id="searchbydate-group">
 								<div class="input-group">
 									<input type="date" class="form-control" aria-label="search"
-										id="search" name="search" placeholder="Search"> <span
+										name="date" placeholder="Search"> <span
 										class="input-group-btn">
 										<button type="submit" class="btn btn-default">Search</button>
 									</span>
@@ -99,12 +99,12 @@
 								id="searchbyprice-group">
 								<div class="row">
 									<div class="col-xs-4 col-sm-5">
-										<input type="number" class="form-control"
+										<input type="number" class="form-control" step="any" min="0"
 											aria-label="lower bound" name="pricelower"
 											placeholder="Upper Bound">
 									</div>
 									<div class="col-xs-4 col-sm-5">
-										<input type="number" class="form-control"
+										<input type="number" class="form-control" step="any" min="0"
 											aria-label="upper bound" name="priceupper"
 											placeholder="Lower Bound">
 									</div>
@@ -171,8 +171,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="container"><div id="operation-alert" class="hidden alert" role="alert">
+	<div id="operation-alert" class="hidden alert" role="alert">
 	<p id="operation-alert-text">
 	</p></div>
-	</div>
 </header>

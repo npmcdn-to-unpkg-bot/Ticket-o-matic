@@ -1,7 +1,29 @@
 /*
+ * SERIALIZE FORM FUNCTION
+ */
+(function($) {
+	$.fn.serializeFormJSON = function() {
+		var disabled = this.find(':input:disabled').removeAttr('disabled');
+		var o = {};
+		var a = this.serializeArray();
+		disabled.attr('disabled', 'disabled');
+		$.each(a, function() {
+			if (o[this.name]) {
+				if (!o[this.name].push) {
+					o[this.name] = [ o[this.name] ];
+				}
+				o[this.name].push(this.value || '');
+			} else {
+				o[this.name] = this.value || '';
+			}
+		});
+		return o;
+	};
+})(jQuery);
+
+/*
  * Innerbar animations and handlers
  */
-var search_type = 'search';
 function innerToggle(target, parent, selector, tohide) {
 	$(parent + " " + tohide).each(function() {
 		$(this).hide();
@@ -51,6 +73,28 @@ $("#inner-search-form").on('click', "input[name=filters]", function() {
 		searchPlaceholder("Search by Events Location");
 	}
 });
+$("#inner-search-form").on('submit',function(event){
+	var value;
+	//event.preventDefault();
+	var filter = $(this).find("input[name=filters]:checked").val();
+	if (filter === 'bydate') {
+		value = "date="+$(this).find("input[type=date]").val();
+	} else if (filter === 'byprice') {
+		value = "lb="+$(this).find("input[name=pricelower]").val();
+		value +="&up="+$(this).find("input[name=priceupper]").val();
+	} else {
+		value = "s="+$(this).find("input[type=search]").val();
+	}
+	$.ajax({
+		url : "search?action="+filter+"&"+value,
+		type : "POST",
+		dataType : "JSON",
+	}).done(function(data) {
+		console.log(data);
+	}).fail(function(data, status, err) {
+		
+	});
+});
 /*
  * Back-to-top button animations and handler
  */
@@ -98,28 +142,7 @@ $("#create-event .ticket").on('click', "button", function() {
 		$(ticket).remove();
 	})
 });
-/*
- * SERIALIZE FORM FUNCTION
- */
-(function($) {
-	$.fn.serializeFormJSON = function() {
-		var disabled = this.find(':input:disabled').removeAttr('disabled');
-		var o = {};
-		var a = this.serializeArray();
-		disabled.attr('disabled', 'disabled');
-		$.each(a, function() {
-			if (o[this.name]) {
-				if (!o[this.name].push) {
-					o[this.name] = [ o[this.name] ];
-				}
-				o[this.name].push(this.value || '');
-			} else {
-				o[this.name] = this.value || '';
-			}
-		});
-		return o;
-	};
-})(jQuery);
+
 
 /*
  * SIGN UP REQUEST

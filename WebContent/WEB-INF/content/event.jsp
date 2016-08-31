@@ -12,8 +12,8 @@
         </div>
         <div class="row">
             <div class="col-xs-12 col-sm-3">
-                <a href="#" class="thumbnail">
-                    <img src="assets/Image_placeholder.png" alt="event image" class="img-responsive">
+                <a href="${event.image }">
+                    <img src="${event.image }" alt="${event.name } image" class="img-responsive">
                 </a>
             </div>
             <div class="col-xs-12 col-sm-9">

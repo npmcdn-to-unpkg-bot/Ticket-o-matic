@@ -40,7 +40,6 @@ import it.siw.service.UserService;
  * 	-- create event // organizer only
  * 	- cart
  * 	- event
- * 	- search
  * 	- registration
  * </pre>
  */
@@ -52,7 +51,7 @@ public class HomeController extends HttpServlet {
     public void destroy() {
 
 	DAOFactory.getDaoFactory(DAOFactory.POSTGRES).destroyDataSource();
-	System.err.println("Destroing !");
+	System.err.println("Destroying !");
     }
 
     /**
@@ -140,9 +139,6 @@ public class HomeController extends HttpServlet {
 	}
 	case "registration":
 	    page = "registration";
-	    break;
-	case "search":
-	    page = "search";
 	    break;
 	default: {
 	    SearchService search = new SearchService();

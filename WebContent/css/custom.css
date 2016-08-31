@@ -11,7 +11,14 @@ body {
         height: 100%;
     }
 }
-
+header{
+	position: relative;
+}
+#operation-alert{
+	position: absolute;
+	right:0;
+	z-index: 100;
+}
 /*
 * NAVBAR TOP
 */
@@ -95,7 +102,24 @@ body {
     width: 100%;
     margin-left: -15px;
 }
-
+/*
+* TUMBNAILS
+*/
+.thumbnail {
+	position:relative;
+	background-color: #FFF1FF;
+	color:white;
+}
+.thumbnail > .caption{
+	position: absolute;
+	bottom:0;
+	left: 0;
+right: 0;
+margin: auto;
+}
+.thumbnail a:link,.thumbnail a:visited,.thumbnail a:hover,.thumbnail a:active {
+	color:white;
+}
 /*
 * SIDEBAR
 */
@@ -175,6 +199,7 @@ body {
 
 .events-list img {
     padding-top: 2.5px;
+    padding-bottom: 2.5px;
 }
 
 /*

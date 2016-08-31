@@ -2,7 +2,9 @@ package it.siw.control;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,12 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.JsonObject;
 
+import it.siw.model.Event;
 import it.siw.service.SearchService;
 
 /**
  * Servlet implementation class SearchController
  */
-@WebServlet("/SearchController")
+@WebServlet("/search")
 public class SearchController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -35,8 +38,49 @@ public class SearchController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	// TODO Auto-generated method stub
+	BufferedReader br = new BufferedReader(request.getReader());
+	String json = "";
+	if (br != null) {
+	    json = br.readLine();
+	}
+	String filter = request.getParameter("filters");
+	JsonObject result = new JsonObject();
+	Map<Integer, Event> events = null;
 
+	switch (filter) {
+	case "bydate": {
+	    String date = request.getParameter("date");
+	    events = new SearchService().getByDate(date, 10, 0);
+	    break;
+	}
+	case "byprice": {
+	    String lower = request.getParameter("pricelower");
+	    String upper = request.getParameter("priceupper");
+	    events = new SearchService().getByPrice(lower, upper, 10, 0);
+	    break;
+	}
+	case "bytitle": {
+	    String title = request.getParameter("search");
+	    events = new SearchService().getByTitle(title, 10, 0);
+	    break;
+	}
+	case "byloc": {
+	    String loc = request.getParameter("search");
+	    events = new SearchService().getByLoc(loc, 10, 10);
+	    break;
+	}
+	default:
+	    break;
+	}
+
+	if (json == null) {
+	    request.setAttribute("results", events);
+	    request.setAttribute("page", "content/search.jsp");
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/home.jsp");
+	    dispatcher.forward(request, response);
+	} else {
+	    response.getWriter().write(result.toString());
+	}
     }
 
     /**
@@ -46,73 +90,7 @@ public class SearchController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
 	    throws ServletException, IOException {
-	// TODO Auto-generated method stub
-
-	BufferedReader br = new BufferedReader(request.getReader());
-	String json = "";
-	if (br != null) {
-	    json = br.readLine();
-	}
-
-	response.setContentType("text/html");
-	String action = request.getParameter("action");
-	JsonObject result = new JsonObject();
-
-	switch (action) {
-	case "searchById": {
-	    SearchService searchService = new SearchService();
-	    // searchService.getEventById(action,result);
-	    break;
-	}
-	case "searchByGuest": {
-	    SearchService searchService = new SearchService();
-	    // searchService.getEventbyfindGuest(action,result);
-	    break;
-	}
-	case "searchByticket": {
-	    SearchService searchService = new SearchService();
-	    // searchService.geEventfindTicket(action,result);
-	    break;
-	}
-	case "searchByLastid": {
-	    SearchService searchService = new SearchService();
-	    // searchService.getEventfindLastId(action,result);
-	    break;
-	}
-	case "findByName": {
-	    SearchService searchService = new SearchService();
-	    // searchService.getEventFindByName(action, result);
-	    break;
-	}
-	case "findByDate": {
-	    SearchService searchService = new SearchService();
-	    // searchService.getEventFindByDate(action, result);
-	    break;
-	}
-	case "findByPrice": {
-	    SearchService searchService = new SearchService();
-	    // searchService.getEventFindByPrice(action, result);
-	    break;
-	}
-	case "findByLocation": {
-	    SearchService searchService = new SearchService();
-	    // searchService.getEventFindByLocation(action ,result);
-	    break;
-	}
-	case "findByGuest": {
-	    SearchService searchService = new SearchService();
-	    // searchService.getEventFindByGuest(action,result);
-	    break;
-	}
-	case "findByCategory": {
-	    SearchService searchService = new SearchService();
-	    // searchService.getEventFindByCategory(action,result);
-	    break;
-	}
-	default:
-	    break;
-	}
-	response.getWriter().append("Served at: ").append(request.getContextPath());
+	doGet(request, response);
     }
 
 }
