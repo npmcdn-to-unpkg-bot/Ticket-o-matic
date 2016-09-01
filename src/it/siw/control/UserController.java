@@ -47,7 +47,7 @@ public class UserController extends HttpServlet {
 	switch (action) {
 	case "update": {
 	    UserService service = new UserService();
-	    User tmp = service.updateUser(json, user.getId(), result);
+	    User tmp = service.updateUser(json, user, result);
 	    if (tmp != null) {
 		session.setAttribute("user", tmp);
 	    }

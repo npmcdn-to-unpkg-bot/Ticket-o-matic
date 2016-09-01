@@ -34,12 +34,24 @@ import it.siw.persistence.dao.WishlistDAO;
  */
 public class UserService {
 
-    public User updateUser(String json, Integer id, JsonObject result) {
+    public User updateUser(String json, User source, JsonObject result) {
 	DAOFactory postgres = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
 	UserDAO userdao = postgres.getUserDAO();
 	Gson gson = new Gson();
 	User user = gson.fromJson(json, User.class);
-	user.setId(id);
+	if ("".equals(user.getName())) {
+	    user.setName(source.getName());
+	}
+	if ("".equals(user.getSurname())) {
+	    user.setSurname(source.getSurname());
+	}
+	if ("".equals(user.getEmail())) {
+	    user.setEmail(source.getEmail());
+	}
+	if ("".equals(user.getPassword())) {
+	    user.setPassword(source.getPassword());
+	}
+	user.setId(source.getId());
 	if (userdao.update(user)) {
 	    result.addProperty("result", "SUCCESS");
 	    result.addProperty("message", "Profile updated with success !");
