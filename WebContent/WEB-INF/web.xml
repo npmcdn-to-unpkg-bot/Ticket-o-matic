@@ -14,10 +14,10 @@
 	</welcome-file-list>
 	<error-page>
 		<error-code>500</error-code>
-		<location>/WEB_INF/500.jsp</location>
+		<location>/home?action=500</location>
 	</error-page>
 	<error-page>
 		<error-code>404</error-code>
-		<location>/WEB_INF/500.jsp</location>
+		<location>/home?action=404</location>
 	</error-page>
 </web-app>

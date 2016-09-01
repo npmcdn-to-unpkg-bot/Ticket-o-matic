@@ -3,6 +3,7 @@ package it.siw.control;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +41,8 @@ public class UserController extends HttpServlet {
 
 	User user = (User) session.getAttribute("user");
 	if (user == null) {
-	    return;// TODO goto ERROR PAGE - you're not an user
+	    RequestDispatcher dispatcher = request.getRequestDispatcher("home?action=403");
+	    dispatcher.forward(request, response);
 	}
 	switch (action) {
 	case "update": {

@@ -16,8 +16,6 @@ public interface EventDAO {
 
     public Map<Integer, Event> findByDate(LocalDate date, int limit, int offset);
 
-    public Map<Integer, Event> findByGuest(String guest);
-
     public Event findById(Integer id);
 
     public Map<Integer, Event> findByLocation(String location, int limit, int offset);
@@ -31,5 +29,9 @@ public interface EventDAO {
     public Map<Integer, Event> findTop();
 
     public void update(Event e);
+
+    public Map<Integer, Event> findByGuest(String guest, int limit, int offset);
+
+    public boolean suspend(Event event, User user);
 
 }

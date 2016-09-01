@@ -39,6 +39,17 @@ $(function(){
 	});
 });
 
+function getQueryVariable(variable)
+{
+       var query = window.location.search.substring(1);
+       var vars = query.split("&");
+       for (var i=0;i<vars.length;i++) {
+               var pair = vars[i].split("=");
+               if(pair[0] == variable){return pair[1];}
+       }
+       return(false);
+}
+
 /*
  * Innerbar animations and handlers
  */
@@ -96,7 +107,10 @@ $("#inner-search-form").on('click', "input[name=filters]", function() {
 		searchPlaceholder("Search by Events Title");
 	} else if (type === 'byloc') {
 		searchPlaceholder("Search by Events Location");
+	} else if (type === 'byguest') {
+		searchPlaceholder("Search by Events Guests");
 	}
+
 });
 $("#inner-search-form").on('submit',function(event){
 	var value;
@@ -119,6 +133,35 @@ $("#inner-search-form").on('submit',function(event){
 	}).fail(function(data, status, err) {
 		
 	});
+});
+/*
+ * MORE RESULTS
+ */
+
+$("#more-result-btn").on('click',function(){
+	var limit = parseInt($(this).attr("data-limit"),10);
+	var offset = parseInt($(this).attr("data-offset"),10) +1;
+	if(offset<limit){
+		$(this).fadeOut(function(){
+			$(this).removeClass("btn-primary").addClass("btn-danger");
+			$(this).text("No more results").fadeIn();
+		});
+	} else {
+		var value = window.location.search.substring(1);
+		var obj = {};
+		obj["limit"] = limit;
+		obj["offset"] = offset;
+		$.ajax({
+			url : "search?action="+filter+"&"+value,
+			type : "POST",
+			dataType : "JSON",
+			data:JSON.stringify(obj)
+		}).done(function(data) {
+			$.each(data,function(key,value){
+				$(".events-list").append('<div class="row"><div class="col-xs-2"><a href="home?action=event&e='+value.id+'" class="img-responsive"><img src="'+value.image+'" alt="'+value.name +'image" class="img-responsive"></a></div><div class="col-xs-10"><p><strong> '+value.name+'</strong></p><p><strong>Date:</strong> '+ entry.value.date+'</p><p><strong>Location:</strong> '+value.location+'</p><p><strong>Category:</strong> '+value.category.name+'</p><p><a href="home?action=event&e='+value.id +'" class="btn btn-default">View</a></p></div></div>');
+			});
+		});
+	}
 });
 /*
  * Back-to-top button animations and handler
@@ -149,6 +192,24 @@ $("#back-to-top").on('click', function(e) {
 	$("html,body").animate({
 		scrollTop : 0
 	}, duration);
+});
+$("#eventlist").on("click","button",function(){
+	var btn = $(this);
+	var target = $(this).attr("data-target");
+	var status = $(this).attr("data-suspended");
+	
+	var event = {
+		"id":target,
+		"suspended":status
+	};
+	$.ajax({
+		url : "event?action=suspend",
+		type : "POST",
+		dataType : "JSON",
+		data : JSON.stringify(event)
+	}).done(function(data) {
+		window.location.reload();	
+	});
 });
 /*
  * ADD TICKET TO EVENT
@@ -275,6 +336,9 @@ $("#event-details-form").on('submit',function(e){
 	});
 });
 /*
+ *  CART
+ */
+/*
  *  ADD TICKET
  */
 $("#tickets").on('click',"button",function(e){
@@ -365,11 +429,12 @@ $("#empty-cart-btn").on('click',function(){
 	innerToggle("search", "#innerbar-popup", "form", "form");
 	$("#innerbar-popup #inner-cart-div").hide();
 });
-/*
- * 
- * 
- * 
- * 
+$("#unauthorized-btn").on('click',function(){
+	innerToggle("login", "#innerbar-popup", "form", "form");
+	$("#innerbar-popup #inner-cart-div").hide();
+});
+/* 
+ * ACCOUNT DETAILS 
  */
 $("#account-details-form").submit(function(e){
 	e.preventDefault();
@@ -385,23 +450,27 @@ $("#account-details-form").submit(function(e){
     	alert("error: " + data + " status: "+status+ " err: " +err);
     });
 });
+/* 
+ * APPEND WISHLIST 
+ */
 function appendWishlist(data,target){
 	if(data.result === "FAIL"){
-		$(target + " tbody").after("<p>"+data.reason+"</p>");
+		$(target + " tbody").append("<p>"+data.reason+"</p>");
 	} else {
 	$.each(data,function(key,value){
-		$(target + " tbody").after('<tr>'+
+		console.log(value.date);
+		$(target + " tbody").append('<tr>'+
 									'<div class="row">'+
 										'<td class="col-md-10">'+
 											'<div class="media">'+
 												'<div class="media-left">'+
-													'<a href="#" class="thumbnail"><img class="media-object" src="'+value.image+'" alt="" /></a>'+
+													'<a href="#" ><img class="media-object" src="'+value.image+'" alt="" /></a>'+
 												'</div>'+
 												'<div class="media-body">'+
 													'<h4 class="media-heading">'+value.name+'</h4>'+
 													'<dl>'+
 														'<dt>Date</dt>'+
-														'<dd>'+value.date+'</dd>'+
+														'<dd>'+value.date.year+'/'+value.date.month+'/'+value.date.day+'</dd>'+
 														'<dt>Location</dt>'+
 														'<dd>'+value.location+'</dd>'+
 													'</dl>'+
@@ -413,32 +482,35 @@ function appendWishlist(data,target){
 	});
 	}
 }
+/*
+ * APPEND ORDER
+ */
 function appendOrder(data,target){
 	console.log(data);
 	if(data.result === "FAIL"){
 		$(target + " tbody").after("<p>"+data.reason+"</p>");
 	} else {
 	$.each(data,function(key,value){
-		console.log(value);
+		console.log(value.ticket.event.date);
 		$(target + " tbody").append('<tr>'+
 									'<div class="row">'+
-										'<td class="col col-md-4 col-xs-12">'+
+										'<td class="col-md-4 col-xs-12">'+
 											'<div class="media">'+
 												'<div class="media-left">'+
-													'<a href="#" class="thumbnail"><img class="media-object" src="'+value.ticket.event.image+'" alt="" /></a>'+
+													'<a href="#"><img class="media-object" src="'+value.ticket.event.image+'" alt="" /></a>'+
 												'</div>'+
 												'<div class="media-body">'+
 													'<h4 class="media-heading">'+value.ticket.event.name+'</h4>'+
 													'<dl>'+
 														'<dt>Date</dt>'+
-														'<dd>'+value.ticket.event.date+'</dd>'+
+														'<dd>'+value.ticket.event.date.year+'/'+value.ticket.event.date.month+'/'+value.ticket.event.date.day+'</dd>'+
 														'<dt>Location</dt>'+
 														'<dd>'+value.ticket.event.location+'</dd>'+
 													'</dl>'+
 												'</div>'+
 											'</div>'+
 										'</td>'+
-										'<td class=" col col-md-4 col-xs-12">'+
+										'<td class="col-md-4 col-xs-12">'+
 										'<dl>'+
 										'<dt>Ticket</dt>'+
 										'<dd>'+value.ticket.id+'</dd>'+
@@ -446,7 +518,7 @@ function appendOrder(data,target){
 										'<dd>'+value.ticket.category.name+'</dd>'+
 									'</dl>'+
 									'</td>'+
-									'<td class="col col-md-4 col-xs-12">'+
+									'<td class="col-md-4 col-xs-12">'+
 									'<dl>'+
 									'<dt>Seller</dt>'+
 									'<dd>'+value.seller.username+'</dd>'+
@@ -459,11 +531,6 @@ function appendOrder(data,target){
 	});
 	}
 }
-/*
- * offset and limit for wishlist
- */
-var offset = 0;
-var limit = 5;
 
 /*
  *  Show wishlists events

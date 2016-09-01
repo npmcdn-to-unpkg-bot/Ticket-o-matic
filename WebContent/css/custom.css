@@ -220,7 +220,17 @@ footer a {
 footer a:hover, footer a:focus {
     color: #e6d5b8;
 }
+.media-object {
+	width:64px;
+	height:auto;
+}
+.jumbotron {
+	position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
 
+}
 /*
 * DROPDOWN
 */

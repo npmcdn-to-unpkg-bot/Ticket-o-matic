@@ -37,9 +37,18 @@
 										<strong>Suspended :</strong> ${entry.value.suspended}
 									</p>
 									<p>
-										<button data-target="${entry.key}" type="button"
+										<button data-target="${entry.key}"
+											data-suspended="${entry.value.suspended}" type="button"
 											class="btn btn-default">
-											<span class="glyphicon glyphicon-cog"></span> Modify
+											<c:choose>
+												<c:when test="${!entry.value.suspended}">
+													<span class="glyphicon glyphicon-eye-close"></span> Suspend event
+											</c:when>
+												<c:otherwise>
+													<span class="glyphicon glyphicon-eye-open"></span> Reactivate event
+											</c:otherwise>
+											</c:choose>
+
 										</button>
 									</p>
 								</div>
@@ -50,8 +59,8 @@
 			</c:choose>
 			<div class="row">
 				<div class="col-xs-12 col-sm-6 col-sm-offset-3">
-					<a href="home?action=create" class="btn btn-success btn-block"> <span
-						class="glyphicon glyphicon-plus"></span> New Event
+					<a href="home?action=create" class="btn btn-success btn-block">
+						<span class="glyphicon glyphicon-plus"></span> New Event
 					</a>
 				</div>
 			</div>

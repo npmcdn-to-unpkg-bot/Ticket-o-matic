@@ -71,4 +71,17 @@ public class EventService {
 
     }
 
+    public void suspendEvent(String json, User user, JsonObject result) {
+	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	EventDAO eventdao = factory.getEventDAO();
+	Event event = new Gson().fromJson(json, Event.class);
+	if (eventdao.suspend(event, user)) {
+	    result.addProperty("result", "SUCCESS");
+	} else {
+	    result.addProperty("result", "FAIL");
+	    result.addProperty("reason", "Something weird happened, try again !");
+	}
+
+    }
+
 }

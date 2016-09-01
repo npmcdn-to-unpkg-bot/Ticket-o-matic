@@ -24,20 +24,24 @@
 							<li><a class="trigger right-caret">Concert</a>
 								<ul class="dropdown-menu sub-menu">
 									<li><a href="search?filters=bycat&search=5">Rock & Pop</a></li>
-									<li><a href="search?filters=bycat&search=6">Hard Rock/Metal</a></li>
-									<li><a href="search?filters=bycat&search=7">Jazz and Blues</a></li>
-									<li><a href="search?filters=bycat&search=8">World Music</a></li>
+									<li><a href="search?filters=bycat&search=6">Hard
+											Rock/Metal</a></li>
+									<li><a href="search?filters=bycat&search=7">Jazz and
+											Blues</a></li>
+									<li><a href="search?filters=bycat&search=8">World
+											Music</a></li>
 								</ul></li>
-							<li><a class="trigger right-caret"href="#">Sport</a>
+							<li><a class="trigger right-caret" href="#">Sport</a>
 								<ul class="dropdown-menu sub-menu">
 									<li><a href="search?filters=bycat&search=9">Tennis</a></li>
 									<li><a href="search?filters=bycat&search=10">Football</a></li>
 									<li><a href="search?filters=bycat&search=11">Motorsport</a></li>
 								</ul></li>
-							<li><a class="trigger right-caret"href="#">Theater</a>
+							<li><a class="trigger right-caret" href="#">Theater</a>
 								<ul class="dropdown-menu sub-menu">
 									<li><a href="search?filters=bycat&search=12">Movie</a></li>
-									<li><a href="search?filters=bycat&search=13">Conferences and Speaking</a></li>
+									<li><a href="search?filters=bycat&search=13">Conferences
+											and Speaking</a></li>
 									<li><a href="search?filters=bycat&search=14">Exhibitions</a></li>
 								</ul></li>
 						</ul></li>
@@ -140,10 +144,13 @@
 								</label> <label class="radio-inline"> <input type="radio"
 									name="filters" id="filterbyloc" value="byloc" />Location
 								</label> <label class="radio-inline"> <input type="radio"
+									name="filters" id="filterbyguest" value="byguest" />Guest
+								</label> <label class="radio-inline"> <input type="radio"
 									name="filters" id="filterbydate" value="bydate" />Date
 								</label> <label class="radio-inline"> <input type="radio"
 									name="filters" id="filterbyprice" value="byprice" />Price
 								</label>
+
 							</div>
 						</div>
 					</div>

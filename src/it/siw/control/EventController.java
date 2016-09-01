@@ -3,6 +3,7 @@ package it.siw.control;
 import java.io.BufferedReader;
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -39,14 +40,16 @@ public class EventController extends HttpServlet {
 	JsonObject result = new JsonObject();
 
 	User user = (User) session.getAttribute("user");
+	if (user == null) {
+	    RequestDispatcher dispatch = request.getRequestDispatcher("home?action=403");
+	    dispatch.forward(request, response);
+	}
 	switch (action) {
 	case "create":
 	    new EventService().createEvent(json, user, result);
 	    break;
-	case "update":
-	    EventService eventService1 = new EventService();
-	    response.getWriter().append("GOOD JOB");
-	    eventService1.updateEvent(action);
+	case "suspend":
+	    new EventService().suspendEvent(json, user, result);
 	    break;
 	}
 	response.getWriter().write(result.toString());

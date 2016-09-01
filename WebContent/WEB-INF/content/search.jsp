@@ -23,11 +23,11 @@
 					<div class="events-list col-xs-12">
 						<c:forEach items="${results}" var="entry">
 							<div class="row">
-								<div class="col-xs-2">
+								<div class="col-xs-6 col-xs-offset-3 col-sm-2 col-sm-offset-0">
 									<a href="home?action=event&e=${entry.value.id}" class="img-responsive">
 										<img src="${entry.value.image }" alt="${entry.value.name } image" class="img-responsive"></a>
 									</div>
-									<div class="col-xs-10">
+									<div class="col-xs-12 col-sm-10">
 										<p>
 											<strong>${entry.value.name }</strong>
 										</p>
@@ -39,6 +39,11 @@
 								</div>
 							</c:forEach>
 						</div>
+					</div>
+					<div class="row">
+					<div class="col-xs-12 col-sm-6 col-sm-offset-3">
+						<button id="more-result-btn" data-limit="10" data-offset="${results.size()}"class="btn btn-primary btn-block">Get More Results</button>
+					</div>
 					</div>
 				</c:otherwise>
 			</c:choose>

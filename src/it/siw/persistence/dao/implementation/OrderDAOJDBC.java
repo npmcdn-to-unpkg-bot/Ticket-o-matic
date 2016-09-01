@@ -104,12 +104,6 @@ public class OrderDAOJDBC implements OrderDAO {
     }
 
     @Override
-    public Map<Integer, Order> findByUser(Integer id) {
-	// TODO Auto-generated method stub
-	return null;
-    }
-
-    @Override
     public Order findById(Integer id) {
 	Order order = null;
 	Connection connection = null;
@@ -136,7 +130,6 @@ public class OrderDAOJDBC implements OrderDAO {
 		    Sell sell = new Sell();
 		    sell.setId(result.getInt("idsell"));
 		    sell.setPrice(result.getFloat("price"));
-		    System.out.println(result.getFloat("price"));
 		    User user = new User();
 		    user.setId(result.getInt("iduser"));
 		    user.setUsername(result.getString("username"));
@@ -150,7 +143,6 @@ public class OrderDAOJDBC implements OrderDAO {
 		    Event event = new Event();
 		    event.setId(result.getInt("idevent"));
 		    event.setName(result.getString("name"));
-
 		    event.setDate(result.getDate("date").toLocalDate());
 		    event.setLocation(result.getString("location"));
 		    event.setImage(result.getString("image"));
@@ -171,7 +163,7 @@ public class OrderDAOJDBC implements OrderDAO {
     }
 
     @Override
-    public Map<Integer, Order> findByUser(Integer id, Integer offset, Integer limit) {
+    public Map<Integer, Order> findByUser(Integer id) {
 	HashMap<Integer, Order> orders = null;
 	Connection connection = null;
 	String query = null;
@@ -184,11 +176,8 @@ public class OrderDAOJDBC implements OrderDAO {
 	    query += "INNER JOIN usersellticket as S ON o.idorder = s.order_id ";
 	    query += "WHERE o.user_id = ? ";
 	    query += "GROUP BY idorder ";
-	    query += "OFFSET ? LIMIT ? ";
 	    statement = connection.prepareStatement(query);
 	    statement.setInt(1, id);
-	    statement.setInt(2, offset);
-	    statement.setInt(3, limit);
 	    result = statement.executeQuery();
 	    if (result.isBeforeFirst()) {
 		orders = new HashMap<>();

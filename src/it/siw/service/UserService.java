@@ -170,7 +170,7 @@ public class UserService {
 	DAOFactory postgres = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
 	OrderDAO orderdao = postgres.getOrderDAO();
 	Gson gson = new Gson();
-	Map<Integer, Order> orders = orderdao.findByUser(id, offset, limit);
+	Map<Integer, Order> orders = orderdao.findByUser(id);
 	if (orders != null) {
 	    Type type = new TypeToken<Map<Integer, Order>>() {
 	    }.getType();

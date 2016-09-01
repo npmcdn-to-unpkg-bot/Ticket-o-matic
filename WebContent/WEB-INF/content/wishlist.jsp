@@ -49,9 +49,10 @@
 			</c:otherwise>
 		</c:choose>
 		</section>
+		</div>
 	</div>
 	<div class="row">
-		<div class="col col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1">
+		<div class="col-sm-4 col-sm-offset-4 col-xs-10 col-xs-offset-1">
 			<div class="panel panel-primary">
 				<div class="panel-heading">
 					<button class="btn btn-info  btn-block" id="addwishlist">Add
@@ -72,4 +73,4 @@
 			</div>
 		</div>
 		</div>
-	</div>
+	

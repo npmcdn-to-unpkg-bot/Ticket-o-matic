@@ -64,4 +64,12 @@ public class SearchService {
 	return events;
     }
 
+    public Map<Integer, Event> getByGuest(String guest, int limit, int offset) {
+	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	EventDAO eventdao = factory.getEventDAO();
+	Map<Integer, Event> events;
+	events = eventdao.findByGuest(guest, limit, offset);
+	return events;
+    }
+
 }

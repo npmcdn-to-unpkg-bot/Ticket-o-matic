@@ -71,23 +71,38 @@ public class HomeController extends HttpServlet {
 	User user = (User) session.getAttribute("user");
 	switch (action) {
 	case "details":
-	    account_content = "details";
-	    page = "account";
+	    if (user != null) {
+		account_content = "details";
+		page = "account";
+	    } else {
+		page = "403";
+	    }
+
 	    break;
 	case "wishlist": {
-	    account_content = "wishlist";
-	    page = "account";
-	    UserService service = new UserService();
-	    Map<Integer, Wishlist> wishlists = service.showWishlist(user.getId(), 0, 10);
-	    request.setAttribute("wishlists", wishlists);
+	    if (user != null) {
+		account_content = "wishlist";
+		page = "account";
+		UserService service = new UserService();
+		Map<Integer, Wishlist> wishlists = service.showWishlist(user.getId(), 0, 10);
+		request.setAttribute("wishlists", wishlists);
+	    } else {
+		page = "403";
+	    }
+
 	    break;
 	}
 	case "order": {
-	    account_content = "order";
-	    page = "account";
-	    UserService service = new UserService();
-	    Map<Integer, Order> orders = service.showOrders(user.getId(), 0, 10);
-	    request.setAttribute("orders", orders);
+	    if (user != null) {
+		account_content = "order";
+		page = "account";
+		UserService service = new UserService();
+		Map<Integer, Order> orders = service.showOrders(user.getId(), 0, 10);
+		request.setAttribute("orders", orders);
+	    } else {
+		page = "403";
+	    }
+
 	    break;
 	}
 	case "create":
@@ -98,8 +113,7 @@ public class HomeController extends HttpServlet {
 		account_content = "create_event";
 		page = "account";
 	    } else {
-		account_content = "details";
-		page = "account";
+		page = "403";
 	    }
 	    break;
 	case "eventlist":
@@ -109,8 +123,7 @@ public class HomeController extends HttpServlet {
 		account_content = "eventlist";
 		page = "account";
 	    } else {
-		account_content = "details";
-		page = "account";
+		page = "403";
 	    }
 	    break;
 	case "cart": {
@@ -139,6 +152,15 @@ public class HomeController extends HttpServlet {
 	}
 	case "registration":
 	    page = "registration";
+	    break;
+	case "403":
+	    page = "403";
+	    break;
+	case "404":
+	    page = "404";
+	    break;
+	case "500":
+	    page = "500";
 	    break;
 	default: {
 	    SearchService search = new SearchService();

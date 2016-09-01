@@ -153,7 +153,7 @@ public class EventDaoJDBC implements EventDAO {
     }
 
     @Override
-    public Map<Integer, Event> findByDate(LocalDate date, int limit, int offset) {
+    public Map<Integer, Event> findByGuest(String guest, int limit, int offset) {
 	Map<Integer, Event> events = new HashMap<>();
 	Connection connection = null;
 	String query = null;
@@ -162,10 +162,10 @@ public class EventDaoJDBC implements EventDAO {
 	try {
 	    connection = datasource.getConnection();
 	    query = "SELECT e.idevent as id,e.name as name,e.location,e.date,e.image,ecat.name as category "
-		    + "FROM event_by_date(?,?,?) as s " + "JOIN event as e ON s = e.idevent "
+		    + "FROM event_by_guest(?,?,?) as s " + "JOIN event as e ON s = e.idevent "
 		    + "JOIN eventcategory as ecat ON e.category_id = ecat.ideventcategory";
 	    statement = connection.prepareStatement(query);
-	    statement.setDate(1, Date.valueOf(date));
+	    statement.setString(1, guest);
 	    statement.setInt(2, limit);
 	    statement.setInt(3, offset);
 	    result = statement.executeQuery();
@@ -195,7 +195,7 @@ public class EventDaoJDBC implements EventDAO {
     }
 
     @Override
-    public Map<Integer, Event> findByGuest(String guest) {
+    public Map<Integer, Event> findByDate(LocalDate date, int limit, int offset) {
 	Map<Integer, Event> events = new HashMap<>();
 	Connection connection = null;
 	String query = null;
@@ -203,33 +203,27 @@ public class EventDaoJDBC implements EventDAO {
 	ResultSet result = null;
 	try {
 	    connection = datasource.getConnection();
-	    query = "Select E.idEvent,E.Name,E.Location,E.Date,E.Suspended,EC.idEventCategory,EC.Name,U.idUser,U.Username,E.Image ";
-	    query += "FROM Event as E ";
-	    query += "INNER JOIN EventCategory as EC ON E.Category_id=EC.idEventCategory ";
-	    query += "INNER JOIN User as U ON E.Organizer_id=U.idUser ";
-	    query += "INNER JOIN Event_has_Guest as HG ON E.idEvent=HG.Event_idEvent ";
-	    query += "INNER JOIN Guest as G ON HG.Guest_idGuest=G.idGuest ";
-	    query += "WHERE G.Name LIKE ?";
+	    query = "SELECT e.idevent as id,e.name as name,e.location,e.date,e.image,ecat.name as category "
+		    + "FROM event_by_date(?,?,?) as s " + "JOIN event as e ON s = e.idevent "
+		    + "JOIN eventcategory as ecat ON e.category_id = ecat.ideventcategory";
 	    statement = connection.prepareStatement(query);
-	    statement.setString(1, guest);
+	    statement.setDate(1, Date.valueOf(date));
+	    statement.setInt(2, limit);
+	    statement.setInt(3, offset);
 	    result = statement.executeQuery();
+	    int i = 1;
 	    while (result.next()) {
 		Event event = new Event();
-		event.setId(result.getInt("E.idEvent"));
-		event.setName(result.getString("E.Name"));
-		event.setLocation(result.getString("E.Location"));
-
-		event.setDate(result.getDate("E.Date").toLocalDate());
-		event.setSuspended(result.getBoolean("E.Suspended"));
+		event.setId(result.getInt("id"));
+		event.setName(result.getString("Name"));
+		event.setLocation(result.getString("location"));
+		event.setImage(result.getString("image"));
+		event.setDate(result.getDate("Date").toLocalDate());
 		EventCategory category = new EventCategory();
-		category.setId(result.getInt("EC.idEventCategory"));
-		category.setName(result.getString("EC.Name"));
+		category.setName(result.getString("category"));
 		event.setCategory(category);
-		User organizer = new User();
-		organizer.setId(result.getInt("U.idUser"));
-		organizer.setUsername(result.getString("U.Username"));
-		event.setOrganizer(organizer);
-		events.put(event.getId(), event);
+		events.put(i, event);
+		i++;
 	    }
 	} catch (SQLException e) {
 	    // TODO Auto-generated catch block
@@ -518,6 +512,30 @@ public class EventDaoJDBC implements EventDAO {
 	    DAOUtility.close(statement);
 	}
 
+    }
+
+    @Override
+    public boolean suspend(Event event, User user) {
+	Connection connection = null;
+	String query = null;
+	PreparedStatement statement = null;
+	try {
+	    connection = datasource.getConnection();
+	    query = "Update Event SET Suspended=? WHERE idEvent = ? AND organizer_id = ?";
+	    statement = connection.prepareStatement(query);
+	    statement.setBoolean(1, !event.getSuspended());
+	    statement.setInt(2, event.getId());
+	    statement.setInt(3, user.getId());
+	    return (statement.executeUpdate() > 0) ? true : false;
+
+	} catch (SQLException e) {
+	    // TODO Auto-generated catch block
+	    e.printStackTrace();
+	} finally {
+	    DAOUtility.close(connection);
+	    DAOUtility.close(statement);
+	}
+	return false;
     }
 
 }
