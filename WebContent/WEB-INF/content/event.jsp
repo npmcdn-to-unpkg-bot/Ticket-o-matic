@@ -83,6 +83,15 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-12">
+				<p class="lead">On Map</p>
+				<hr>
+			</div>
+			<div class="col-xs-12">
+				<div id="map"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
 				<p class="lead">Guests:</p>
 				<hr>
 			</div>
@@ -151,3 +160,5 @@
 		</div>
 	</section>
 </div>
+<script src="./js/geocoding.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCMqVgg0kLVFTU6TkclnI8t4V7q08DBwdU&callback=initMap"></script>
