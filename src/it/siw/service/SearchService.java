@@ -4,8 +4,10 @@ import java.time.LocalDate;
 import java.util.Map;
 
 import it.siw.model.Event;
+import it.siw.model.Guest;
 import it.siw.persistence.DAOFactory;
 import it.siw.persistence.dao.EventDAO;
+import it.siw.persistence.dao.GuestDAO;
 
 public class SearchService {
     public SearchService() {
@@ -18,6 +20,12 @@ public class SearchService {
 	events = eventdao.findTop();
 	return events;
 
+    }
+
+    public Map<Integer, Guest> getTopGuest() {
+	DAOFactory factory = DAOFactory.getDaoFactory(DAOFactory.POSTGRES);
+	GuestDAO guestdao = factory.getGuestDAO();
+	return guestdao.findTop();
     }
 
     public Map<Integer, Event> getByDate(String date, int limit, int offset) {

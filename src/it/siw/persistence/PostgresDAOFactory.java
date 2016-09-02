@@ -4,6 +4,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import it.siw.persistence.dao.EventCategoryDAO;
 import it.siw.persistence.dao.EventDAO;
+import it.siw.persistence.dao.GuestDAO;
 import it.siw.persistence.dao.OrderDAO;
 import it.siw.persistence.dao.SellDAO;
 import it.siw.persistence.dao.TicketCategoryDAO;
@@ -12,6 +13,7 @@ import it.siw.persistence.dao.UserDAO;
 import it.siw.persistence.dao.WishlistDAO;
 import it.siw.persistence.dao.implementation.EventCategoryDaoJDBC;
 import it.siw.persistence.dao.implementation.EventDaoJDBC;
+import it.siw.persistence.dao.implementation.GuestDAOJDBC;
 import it.siw.persistence.dao.implementation.OrderDAOJDBC;
 import it.siw.persistence.dao.implementation.SellDAOJDBC;
 import it.siw.persistence.dao.implementation.TicketCategoryDAOJDBC;
@@ -100,5 +102,10 @@ public class PostgresDAOFactory extends DAOFactory {
     @Override
     public TicketCategoryDAO getTicketCategoryDAO() {
 	return new TicketCategoryDAOJDBC(datasource);
+    }
+
+    @Override
+    public GuestDAO getGuestDAO() {
+	return new GuestDAOJDBC(datasource);
     }
 }

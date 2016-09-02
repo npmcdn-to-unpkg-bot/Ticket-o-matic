@@ -164,8 +164,7 @@ public class HomeController extends HttpServlet {
 	    break;
 	default: {
 	    SearchService search = new SearchService();
-	    Map<Integer, Event> events = search.getTop();
-	    request.setAttribute("tops", events);
+	    request.setAttribute("tops", search.getTopGuest());
 	    page = "main";
 	}
 	}
