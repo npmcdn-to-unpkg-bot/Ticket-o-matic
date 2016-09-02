@@ -4,7 +4,7 @@
 <div class="content container">
     <section id="top">
         <h1>Top Events</h1>
-        <div class="row">
+        <div class="grid row">
         <c:forEach items="${tops}" var="entry">
             <div class="col-xs-6 col-md-3">
                 <div class="thumbnail">
@@ -20,7 +20,7 @@
     <section id="recent">
         <h1>Recents Events</h1>
         <div class="row">
-            <div class="col-sm-6 col-md-3">
+            <div class="grid-sizer col-sm-6 col-md-3">
                 <div class="thumbnail">
                     <img src="./assets/Image_placeholder.png" alt="Event Title image">
                     <div class="caption">
@@ -59,3 +59,6 @@
         </div>
     </section>
 </div>
+<script src="https://unpkg.com/masonry-layout@4.1/dist/masonry.pkgd.min.js"></script>
+<script src="https://npmcdn.com/imagesloaded@4.1/imagesloaded.pkgd.min.js"></script>
+<script src="./js/cascadingrid.js"></script>

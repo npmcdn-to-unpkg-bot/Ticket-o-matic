@@ -28,9 +28,9 @@ public class PostgresDAOFactory extends DAOFactory {
 
     private static PostgresDAOFactory postgres;
 
-    private static String DBURL = "jdbc:postgresql://tomsiw.ccrwzat7yo5g.us-west-2.rds.amazonaws.com:8080/tom?ApplicationName=Ticket-o-Matic";
-    private static String USERNAME = "thoniorf";
-    private static String PASSWORD = "tom00siw";
+    private static String DBURL = "jdbc:postgresql://127.0.0.1/tom?ApplicationName=Ticket-o-Matic";
+    private static String USERNAME = "postgres";
+    private static String PASSWORD = "postgres";
 
     private static HikariDataSource datasource;
 
